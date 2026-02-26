@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#2C3E50"/>
+  <text x="600" y="280" font-family="sans-serif" font-weight="700" font-size="72" fill="#FFFFFF" text-anchor="middle">Hayaan Dangra</text>
+  <text x="600" y="360" font-family="sans-serif" font-size="32" fill="#3498DB" text-anchor="middle">Builder. Math Explorer. Problem Solver.</text>
+  <line x1="400" y1="400" x2="800" y2="400" stroke="#3498DB" stroke-width="3"/>
+</svg>

@@ -1,0 +1,515 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout
+  title="Fourier Series — Math Explorations | Hayaan Dangra"
+  description="Interactive visualization showing how any periodic wave can be built from simple sine waves using Fourier series."
+>
+  <section class="demo-page section">
+    <div class="container">
+      <h1>Fourier Series: Building Waves</h1>
+
+      <div class="explanation">
+        <p>Any repeating wave — no matter how jagged or complex — can be built from simple sine waves added together.</p>
+        <p>A square wave looks nothing like a sine wave. But watch what happens when I add sine waves with the right frequencies and amplitudes. More terms = closer approximation.</p>
+        <p>This is how MP3s compress music. Instead of storing the full waveform, they store the 'recipe' of sine waves.</p>
+      </div>
+
+      <div class="demo-container">
+        <h2>Wave Approximation</h2>
+        <canvas id="fourierCanvas"></canvas>
+
+        <div class="controls">
+          <div class="control-group">
+            <label for="waveType">Wave Type:</label>
+            <select id="waveType">
+              <option value="square" selected>Square Wave</option>
+              <option value="triangle">Triangle Wave</option>
+              <option value="sawtooth">Sawtooth Wave</option>
+            </select>
+          </div>
+
+          <div class="control-group">
+            <label for="termsSlider">
+              Number of Terms: <span id="termsValue">1</span>
+            </label>
+            <input type="range" id="termsSlider" min="1" max="50" step="1" value="1">
+          </div>
+
+          <div class="checkbox-group">
+            <input type="checkbox" id="showComponents">
+            <label for="showComponents">Show individual sine components</label>
+          </div>
+
+          <div class="button-group">
+            <button id="resetBtn">Reset</button>
+            <button id="animateBtn">Animate</button>
+          </div>
+
+          <div class="stats">
+            <p><strong>Terms:</strong> <span id="termsDisplay">1</span></p>
+            <p><strong>Error:</strong> <span id="errorDisplay">—</span></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="why-matters">
+        <h2>Why This Matters</h2>
+        <p>Joseph Fourier discovered this in 1807 while studying heat flow. It was so controversial that even Lagrange objected — the idea that any function could be decomposed into sine waves seemed impossible.</p>
+        <p>Today, Fourier analysis is everywhere: audio compression (MP3), image compression (JPEG), noise cancellation, medical imaging (MRI), and signal processing in every phone you've ever used.</p>
+      </div>
+
+      <nav class="demo-nav">
+        <a href="/math-explorations/walks">← Random Walks</a>
+        <a href="/math-explorations">Back to Math Explorations</a>
+      </nav>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .demo-page {
+    padding: var(--space-xl) 0 var(--space-3xl);
+  }
+
+  h1 {
+    text-align: center;
+    margin-bottom: var(--space-xl);
+  }
+
+  h2 {
+    margin-top: var(--space-xl);
+    margin-bottom: var(--space-md);
+  }
+
+  .explanation {
+    max-width: 800px;
+    margin: 0 auto var(--space-2xl);
+    background-color: var(--light-gray);
+    padding: var(--space-lg);
+    border-radius: 8px;
+    border-left: 4px solid #9B59B6;
+  }
+
+  .demo-container {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  canvas {
+    width: 100%;
+    height: 400px;
+    border: 1px solid var(--mid-gray);
+    border-radius: 4px;
+    background-color: var(--white);
+    display: block;
+    margin-bottom: var(--space-lg);
+  }
+
+  .controls {
+    padding: var(--space-md);
+    background-color: var(--light-gray);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .control-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+  }
+
+  .checkbox-group input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }
+
+  .checkbox-group label {
+    margin: 0;
+    cursor: pointer;
+    font-weight: 400;
+  }
+
+  label {
+    font-weight: 500;
+    color: var(--charcoal);
+  }
+
+  #termsValue {
+    color: #9B59B6;
+    font-weight: 700;
+  }
+
+  input[type="range"] {
+    width: 100%;
+    height: 8px;
+    border-radius: 4px;
+    background: var(--mid-gray);
+    outline: none;
+    -webkit-appearance: none;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #9B59B6;
+    cursor: pointer;
+  }
+
+  input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #9B59B6;
+    cursor: pointer;
+    border: none;
+  }
+
+  select {
+    width: 100%;
+    padding: var(--space-sm);
+    border: 1px solid var(--mid-gray);
+    border-radius: 4px;
+    background-color: var(--white);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    cursor: pointer;
+  }
+
+  .button-group {
+    display: flex;
+    gap: var(--space-sm);
+  }
+
+  button {
+    flex: 1;
+    min-height: 44px;
+  }
+
+  .stats {
+    padding: var(--space-md);
+    background-color: var(--white);
+    border-radius: 4px;
+    border-left: 4px solid #9B59B6;
+  }
+
+  .stats p {
+    margin: var(--space-xs) 0;
+    font-size: 0.95rem;
+  }
+
+  .stats span {
+    color: #9B59B6;
+    font-weight: 700;
+  }
+
+  .why-matters {
+    max-width: 800px;
+    margin: var(--space-2xl) auto;
+    padding: var(--space-lg);
+    background-color: var(--light-gray);
+    border-radius: 8px;
+    border-left: 4px solid var(--orange);
+  }
+
+  .demo-nav {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-md);
+    margin-top: var(--space-2xl);
+    padding-top: var(--space-xl);
+    border-top: 1px solid var(--mid-gray);
+    flex-wrap: wrap;
+  }
+
+  .demo-nav a {
+    font-weight: 500;
+  }
+
+  @media (max-width: 768px) {
+    canvas {
+      height: 300px;
+    }
+
+    .demo-nav {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+</style>
+
+<script>
+  const canvas = document.getElementById('fourierCanvas') as HTMLCanvasElement;
+  const waveType = document.getElementById('waveType') as HTMLSelectElement;
+  const termsSlider = document.getElementById('termsSlider') as HTMLInputElement;
+  const termsValue = document.getElementById('termsValue') as HTMLSpanElement;
+  const showComponents = document.getElementById('showComponents') as HTMLInputElement;
+  const resetBtn = document.getElementById('resetBtn') as HTMLButtonElement;
+  const animateBtn = document.getElementById('animateBtn') as HTMLButtonElement;
+  const termsDisplay = document.getElementById('termsDisplay') as HTMLSpanElement;
+  const errorDisplay = document.getElementById('errorDisplay') as HTMLSpanElement;
+
+  let animationFrame: number | null = null;
+  let isAnimating = false;
+
+  function setupCanvas() {
+    const dpr = window.devicePixelRatio || 1;
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    const ctx = canvas.getContext('2d')!;
+    ctx.scale(dpr, dpr);
+    return { ctx, width: rect.width, height: rect.height };
+  }
+
+  function targetWave(x: number, type: string): number {
+    const period = Math.PI * 2;
+    const phase = x % period;
+
+    if (type === 'square') {
+      return phase < Math.PI ? 1 : -1;
+    } else if (type === 'triangle') {
+      if (phase < Math.PI / 2) return phase / (Math.PI / 2);
+      if (phase < 3 * Math.PI / 2) return 1 - 2 * (phase - Math.PI / 2) / Math.PI;
+      return -1 + (phase - 3 * Math.PI / 2) / (Math.PI / 2);
+    } else if (type === 'sawtooth') {
+      return 2 * (phase / period) - 1;
+    }
+    return 0;
+  }
+
+  function fourierApproximation(x: number, n: number, type: string): number {
+    let sum = 0;
+
+    if (type === 'square') {
+      // Square wave: (4/π) * Σ sin((2k-1)x)/(2k-1)
+      for (let k = 1; k <= n; k++) {
+        sum += Math.sin((2 * k - 1) * x) / (2 * k - 1);
+      }
+      return (4 / Math.PI) * sum;
+    } else if (type === 'triangle') {
+      // Triangle wave: (8/π²) * Σ (-1)^k * sin((2k+1)x)/(2k+1)²
+      for (let k = 0; k < n; k++) {
+        const sign = k % 2 === 0 ? 1 : -1;
+        sum += sign * Math.sin((2 * k + 1) * x) / Math.pow(2 * k + 1, 2);
+      }
+      return (8 / (Math.PI * Math.PI)) * sum;
+    } else if (type === 'sawtooth') {
+      // Sawtooth wave: -(2/π) * Σ (-1)^k * sin(kx)/k
+      for (let k = 1; k <= n; k++) {
+        const sign = k % 2 === 0 ? 1 : -1;
+        sum += sign * Math.sin(k * x) / k;
+      }
+      return -(2 / Math.PI) * sum;
+    }
+
+    return 0;
+  }
+
+  function drawFourierSeries() {
+    const { ctx, width, height } = setupCanvas();
+    const type = waveType.value;
+    const n = parseInt(termsSlider.value);
+
+    termsValue.textContent = n.toString();
+    termsDisplay.textContent = n.toString();
+
+    ctx.fillStyle = '#FFFFFF';
+    ctx.fillRect(0, 0, width, height);
+
+    const padding = 40;
+    const graphWidth = width - 2 * padding;
+    const graphHeight = height - 2 * padding;
+    const centerY = height / 2;
+
+    // Draw axes
+    ctx.strokeStyle = '#ECF0F1';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(padding, padding);
+    ctx.lineTo(padding, height - padding);
+    ctx.lineTo(width - padding, height - padding);
+    ctx.stroke();
+
+    ctx.strokeStyle = '#BDC3C7';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(padding, centerY);
+    ctx.lineTo(width - padding, centerY);
+    ctx.stroke();
+
+    const samples = 1000;
+    const xRange = 4 * Math.PI;
+
+    // Draw target wave (dashed)
+    ctx.strokeStyle = '#BDC3C7';
+    ctx.lineWidth = 2;
+    ctx.setLineDash([5, 5]);
+    ctx.beginPath();
+
+    for (let i = 0; i <= samples; i++) {
+      const x = (i / samples) * xRange;
+      const y = targetWave(x, type);
+      const px = padding + (i / samples) * graphWidth;
+      const py = centerY - (y * graphHeight / 4);
+
+      if (i === 0) {
+        ctx.moveTo(px, py);
+      } else {
+        ctx.lineTo(px, py);
+      }
+    }
+
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Draw individual components (if enabled)
+    if (showComponents.checked && n <= 10) {
+      for (let k = 1; k <= n; k++) {
+        const hue = (k / n) * 360;
+        ctx.strokeStyle = `hsla(${hue}, 70%, 50%, 0.3)`;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+
+        for (let i = 0; i <= samples; i++) {
+          const x = (i / samples) * xRange;
+          let y = 0;
+
+          if (type === 'square') {
+            y = (4 / Math.PI) * Math.sin((2 * k - 1) * x) / (2 * k - 1);
+          } else if (type === 'triangle') {
+            const sign = (k - 1) % 2 === 0 ? 1 : -1;
+            y = (8 / (Math.PI * Math.PI)) * sign * Math.sin((2 * k - 1) * x) / Math.pow(2 * k - 1, 2);
+          } else if (type === 'sawtooth') {
+            const sign = k % 2 === 0 ? 1 : -1;
+            y = -(2 / Math.PI) * sign * Math.sin(k * x) / k;
+          }
+
+          const px = padding + (i / samples) * graphWidth;
+          const py = centerY - (y * graphHeight / 4);
+
+          if (i === 0) {
+            ctx.moveTo(px, py);
+          } else {
+            ctx.lineTo(px, py);
+          }
+        }
+
+        ctx.stroke();
+      }
+    }
+
+    // Draw approximation
+    ctx.strokeStyle = '#3498DB';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+
+    let errorSum = 0;
+
+    for (let i = 0; i <= samples; i++) {
+      const x = (i / samples) * xRange;
+      const target = targetWave(x, type);
+      const approx = fourierApproximation(x, n, type);
+      const px = padding + (i / samples) * graphWidth;
+      const py = centerY - (approx * graphHeight / 4);
+
+      errorSum += Math.pow(target - approx, 2);
+
+      if (i === 0) {
+        ctx.moveTo(px, py);
+      } else {
+        ctx.lineTo(px, py);
+      }
+    }
+
+    ctx.stroke();
+
+    // Calculate RMS error percentage
+    const rmsError = Math.sqrt(errorSum / samples);
+    const errorPercent = (rmsError / 2) * 100; // Normalize to percentage
+    errorDisplay.textContent = `${errorPercent.toFixed(2)}%`;
+
+    // Labels
+    ctx.fillStyle = '#2C3E50';
+    ctx.font = '13px DM Sans';
+    ctx.fillText('0', padding - 10, centerY + 5);
+    ctx.fillText('2π', padding + graphWidth / 2 - 10, height - padding + 20);
+    ctx.fillText('4π', width - padding - 15, height - padding + 20);
+
+    // Legend
+    ctx.fillStyle = '#BDC3C7';
+    ctx.fillText('Target', width - padding - 60, padding + 20);
+    ctx.fillStyle = '#3498DB';
+    ctx.fillText('Approximation', width - padding - 120, padding + 40);
+  }
+
+  function animate() {
+    if (!isAnimating) return;
+
+    let terms = parseInt(termsSlider.value);
+    terms++;
+
+    if (terms > 50) {
+      terms = 1;
+      isAnimating = false;
+      animateBtn.textContent = 'Animate';
+      return;
+    }
+
+    termsSlider.value = terms.toString();
+    drawFourierSeries();
+
+    setTimeout(() => {
+      animationFrame = requestAnimationFrame(animate);
+    }, 300);
+  }
+
+  termsSlider.addEventListener('input', drawFourierSeries);
+  waveType.addEventListener('change', drawFourierSeries);
+  showComponents.addEventListener('change', drawFourierSeries);
+
+  resetBtn.addEventListener('click', () => {
+    isAnimating = false;
+    if (animationFrame) {
+      cancelAnimationFrame(animationFrame);
+    }
+    termsSlider.value = '1';
+    waveType.value = 'square';
+    showComponents.checked = false;
+    animateBtn.textContent = 'Animate';
+    drawFourierSeries();
+  });
+
+  animateBtn.addEventListener('click', () => {
+    if (isAnimating) {
+      isAnimating = false;
+      if (animationFrame) {
+        cancelAnimationFrame(animationFrame);
+      }
+      animateBtn.textContent = 'Animate';
+    } else {
+      isAnimating = true;
+      termsSlider.value = '1';
+      animateBtn.textContent = 'Stop Animation';
+      animate();
+    }
+  });
+
+  window.addEventListener('resize', drawFourierSeries);
+
+  // Initial draw
+  drawFourierSeries();
+</script>

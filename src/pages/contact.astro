@@ -1,0 +1,262 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Contact — Hayaan Dangra"
+  description="Want to collaborate, have a question, or just want to say hey? Get in touch."
+>
+  <section class="contact section">
+    <div class="container">
+      <div class="contact-content">
+        <h1>Get In Touch</h1>
+        <p class="subtext">
+          Want to collaborate, have a question, or just want to say hey? Drop me a message.
+        </p>
+
+        <!-- TODO: Replace PLACEHOLDER with real Formspree form ID -->
+        <form
+          id="contact-form"
+          action="https://formspree.io/f/PLACEHOLDER"
+          method="POST"
+          class="contact-form"
+        >
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              required
+              placeholder="Your name"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              placeholder="your@email.com"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea
+              id="message"
+              name="message"
+              required
+              rows="6"
+              placeholder="Your message..."
+            ></textarea>
+          </div>
+
+          <button type="submit" class="submit-button">Send Message →</button>
+        </form>
+
+        <div id="success-message" class="success-message hidden">
+          Message sent! I'll get back to you soon.
+        </div>
+
+        <!-- TODO: Replace # with Hayaan's actual profile URLs when created -->
+        <div class="social-links">
+          <p class="social-label">Or find me on:</p>
+          <div class="links">
+            <a href="#" class="social-link">X</a>
+            <a href="#" class="social-link">LinkedIn</a>
+            <a href="#" class="social-link">GitHub</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .contact {
+    background-color: var(--white);
+    min-height: 60vh;
+  }
+
+  .contact-content {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  h1 {
+    text-align: center;
+    margin-bottom: var(--space-sm);
+  }
+
+  .subtext {
+    text-align: center;
+    font-size: 1.05rem;
+    color: var(--charcoal);
+    margin-bottom: var(--space-xl);
+  }
+
+  @media (min-width: 768px) {
+    .subtext {
+      font-size: 1.15rem;
+    }
+  }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+    margin-bottom: var(--space-xl);
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  label {
+    font-weight: 500;
+    color: var(--charcoal);
+    font-size: 0.95rem;
+  }
+
+  input,
+  textarea {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    padding: var(--space-sm);
+    border: none;
+    border-bottom: 2px solid var(--mid-gray);
+    background-color: transparent;
+    color: var(--charcoal);
+    transition: border-color 0.2s ease;
+    min-height: 44px;
+  }
+
+  input:focus,
+  textarea:focus {
+    outline: none;
+    border-bottom-color: var(--blue);
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: #95a5a6;
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 120px;
+    padding-top: var(--space-sm);
+  }
+
+  .submit-button {
+    font-family: var(--font-body);
+    font-size: 1.05rem;
+    font-weight: 500;
+    padding: var(--space-md) var(--space-xl);
+    background-color: var(--blue);
+    color: var(--white);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    min-height: 48px;
+  }
+
+  .submit-button:hover {
+    background-color: var(--orange);
+    transform: translateY(-2px);
+  }
+
+  .success-message {
+    background-color: #d4edda;
+    color: #155724;
+    padding: var(--space-md);
+    border-radius: 4px;
+    text-align: center;
+    font-weight: 500;
+    margin-bottom: var(--space-xl);
+  }
+
+  .success-message.hidden {
+    display: none;
+  }
+
+  .social-links {
+    text-align: center;
+    padding-top: var(--space-xl);
+    border-top: 1px solid var(--mid-gray);
+  }
+
+  .social-label {
+    font-size: 1rem;
+    color: var(--charcoal);
+    margin-bottom: var(--space-md);
+  }
+
+  .links {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-lg);
+    flex-wrap: wrap;
+  }
+
+  .social-link {
+    font-weight: 500;
+    font-size: 1.05rem;
+    color: var(--blue);
+    text-decoration: none;
+    transition: color 0.2s ease;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+
+  .social-link:hover {
+    color: var(--orange);
+  }
+</style>
+
+<script>
+  // Check for Formspree success redirect (they add ?success=true or similar)
+  if (window.location.search.includes('success')) {
+    const form = document.getElementById('contact-form');
+    const successMessage = document.getElementById('success-message');
+    if (form && successMessage) {
+      form.style.display = 'none';
+      successMessage.classList.remove('hidden');
+    }
+  }
+
+  // Alternative: handle form submission with fetch for inline success
+  const form = document.getElementById('contact-form') as HTMLFormElement;
+  const successMessage = document.getElementById('success-message');
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        form.style.display = 'none';
+        successMessage?.classList.remove('hidden');
+      }
+    } catch (error) {
+      // If fetch fails, fall back to normal form submission
+      form.submit();
+    }
+  });
+</script>

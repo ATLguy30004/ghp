@@ -1,0 +1,112 @@
+---
+interface Props {
+  year: string;
+  side: 'left' | 'right';
+}
+
+const { year, side } = Astro.props;
+---
+
+<div class={`timeline-item ${side}`}>
+  <div class="timeline-line">
+    <div class="timeline-dot">
+      <span class="year">{year}</span>
+    </div>
+  </div>
+  <div class="timeline-content">
+    <slot />
+  </div>
+</div>
+
+<style>
+  .timeline-item {
+    display: flex;
+    gap: var(--space-lg);
+    margin-bottom: var(--space-2xl);
+    position: relative;
+  }
+
+  .timeline-line {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 60px;
+  }
+
+  .timeline-line::before {
+    content: '';
+    position: absolute;
+    width: 2px;
+    background-color: var(--mid-gray);
+    top: 30px;
+    bottom: -64px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .timeline-item:last-child .timeline-line::before {
+    display: none;
+  }
+
+  .timeline-dot {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: var(--blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+  }
+
+  .year {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    color: var(--white);
+    font-weight: 700;
+  }
+
+  .timeline-content {
+    flex: 1;
+    padding-top: 4px;
+  }
+
+  @media (min-width: 768px) {
+    .timeline-item {
+      margin-bottom: var(--space-3xl);
+    }
+
+    .timeline-item.left {
+      flex-direction: row;
+    }
+
+    .timeline-item.right {
+      flex-direction: row-reverse;
+    }
+
+    .timeline-item.left .timeline-content {
+      text-align: right;
+      padding-right: var(--space-md);
+    }
+
+    .timeline-item.right .timeline-content {
+      text-align: left;
+      padding-left: var(--space-md);
+    }
+
+    .timeline-dot {
+      width: 80px;
+      height: 80px;
+    }
+
+    .year {
+      font-size: 1.25rem;
+    }
+
+    .timeline-line {
+      min-width: 80px;
+    }
+  }
+</style>

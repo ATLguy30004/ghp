@@ -1,0 +1,121 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import TimelineItem from '../components/TimelineItem.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+---
+
+<Layout
+  title="Hayaan Dangra — Builder"
+  description="High school senior who builds things that work. Sold out 2 events, coded math visualizations, and teaching the next generation."
+>
+  <Hero />
+
+  <section id="projects" class="projects section">
+    <div class="container">
+      <h2 class="section-title">What I've Built</h2>
+
+      <div class="timeline">
+        <TimelineItem year="2024" side="left">
+          <ProjectCard
+            title="Elote King"
+            description="Built a website, ran SEO, sold out 2 events for my family's food business."
+            metric="2 Sold-Out Events"
+            tag="Business"
+            href="/elote-king"
+            accentColor="var(--orange)"
+          />
+        </TimelineItem>
+
+        <TimelineItem year="2025" side="right">
+          <ProjectCard
+            title="Math Explorations"
+            description="Interactive visualizations exploring chaos theory, prime patterns, random walks, and wave mathematics."
+            metric="4 Interactive Demos"
+            tag="Math"
+            href="/math-explorations"
+            accentColor="var(--blue)"
+          />
+        </TimelineItem>
+
+        <TimelineItem year="Now" side="left">
+          <ProjectCard
+            title="Creative Labs"
+            description="Teaching kids to code and tutoring at my mom's learning center."
+            metric="Teaching & Tutoring"
+            tag="Community"
+            href="/creative-labs"
+            accentColor="#27AE60"
+          />
+        </TimelineItem>
+      </div>
+    </div>
+  </section>
+
+  <section class="current section">
+    <div class="container">
+      <div class="current-content">
+        <p class="current-text">
+          Currently exploring <strong>cyber security</strong> and <strong>healthcare technology</strong> at Alliance Academy.
+        </p>
+        <a href="/contact" class="button">Get in Touch</a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .projects {
+    background-color: var(--white);
+  }
+
+  .section-title {
+    text-align: center;
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    margin-bottom: var(--space-2xl);
+    color: var(--charcoal);
+  }
+
+  .timeline {
+    max-width: 900px;
+    margin: 0 auto;
+    padding-top: var(--space-lg);
+  }
+
+  .current {
+    background: linear-gradient(180deg, var(--white) 0%, var(--light-gray) 100%);
+  }
+
+  .current-content {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+    align-items: center;
+  }
+
+  .current-text {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: var(--charcoal);
+  }
+
+  .current-text strong {
+    color: var(--blue);
+    font-weight: 700;
+  }
+
+  @media (min-width: 768px) {
+    .section-title {
+      font-size: 3rem;
+      margin-bottom: var(--space-3xl);
+    }
+
+    .current-text {
+      font-size: 1.25rem;
+    }
+  }
+</style>

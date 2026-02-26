@@ -1,0 +1,418 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Elote King — Case Study | Hayaan Dangra"
+  description="How I built a website, ran SEO, and sold out 2 events for my family's food business."
+>
+  <section class="hero section">
+    <div class="container">
+      <div class="hero-content">
+        <span class="tag">Case Study</span>
+        <h1>Elote King: From Idea to Sold-Out Events</h1>
+        <p class="subtitle">
+          How I used web development and SEO to help launch my family's food business.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="challenge section">
+    <div class="container">
+      <h2>The Challenge</h2>
+      <div class="content">
+        <p>
+          My family wanted to launch Elote King — a food business selling Mexican street corn. We had great food but no online presence, no way to reach customers, and no proof that people would actually show up to events.
+        </p>
+        <p class="highlight">
+          The question: Could I build something online that would actually get people to show up in person?
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="built section">
+    <div class="container">
+      <h2>What I Built</h2>
+      <div class="built-grid">
+        <div class="built-item">
+          <div class="number">1</div>
+          <h3>Landing Page</h3>
+          <p>
+            Built a clean, conversion-focused site with event info, menu showcase, and email signup. Used Astro for speed and Formspree for the signup form.
+          </p>
+        </div>
+        <div class="built-item">
+          <div class="number">2</div>
+          <h3>SEO Strategy</h3>
+          <p>
+            Targeted local keywords like "elote near me" and "Mexican street corn [city]". Optimized meta tags, structured data, and Google Business Profile.
+          </p>
+        </div>
+        <div class="built-item">
+          <div class="number">3</div>
+          <h3>Email List</h3>
+          <p>
+            Created a signup funnel that captured 300+ emails before our first event. Each subscriber got event reminders and location updates.
+          </p>
+        </div>
+        <div class="built-item">
+          <div class="number">4</div>
+          <h3>Social Proof Loop</h3>
+          <p>
+            Posted in local Facebook groups, added QR codes to flyers, and let the signups speak for themselves.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="results section">
+    <div class="container">
+      <h2>The Results</h2>
+      <div class="results-grid">
+        <div class="result-card">
+          <div class="result-number">300+</div>
+          <div class="result-label">Email Signups</div>
+          <div class="result-detail">Before first event</div>
+        </div>
+        <div class="result-card">
+          <div class="result-number">2</div>
+          <div class="result-label">Sold-Out Events</div>
+          <div class="result-detail">Back-to-back</div>
+        </div>
+        <div class="result-card">
+          <div class="result-number">✓</div>
+          <div class="result-label">Business Validated</div>
+          <div class="result-detail">Family invested in trailer</div>
+        </div>
+        <div class="result-card">
+          <div class="result-number">∞</div>
+          <div class="result-label">Permanent Hub</div>
+          <div class="result-detail">Website still running</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="learnings section">
+    <div class="container">
+      <h2>What I Learned</h2>
+      <div class="content">
+        <ul class="learnings-list">
+          <li>
+            <strong>Validate before you invest.</strong> The website proved demand before we spent thousands on a food trailer.
+          </li>
+          <li>
+            <strong>Simple landing pages convert better than complex sites.</strong> I removed everything that wasn't pushing toward the signup form.
+          </li>
+          <li>
+            <strong>Local SEO works fast when you target specific queries.</strong> We ranked for "elote near me" within weeks.
+          </li>
+          <li>
+            <strong>The code doesn't matter if the offer isn't clear.</strong> I rewrote the hero copy 4 times before signups took off.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta section">
+    <div class="container">
+      <div class="cta-content">
+        <p>Want to see what else I've built?</p>
+        <div class="cta-buttons">
+          <a href="/math-explorations" class="button">Math Explorations</a>
+          <a href="/" class="button-secondary">Back to Home</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .hero {
+    background: linear-gradient(135deg, var(--orange) 0%, #D35400 100%);
+    color: var(--white);
+    padding-top: var(--space-xl);
+    padding-bottom: var(--space-xl);
+  }
+
+  .hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .tag {
+    display: inline-block;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: var(--white);
+    padding: var(--space-xs) var(--space-md);
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: var(--space-md);
+  }
+
+  .hero h1 {
+    color: var(--white);
+    margin-bottom: var(--space-md);
+  }
+
+  .subtitle {
+    font-size: 1.15rem;
+    line-height: 1.6;
+    margin-bottom: 0;
+    opacity: 0.95;
+  }
+
+  @media (min-width: 768px) {
+    .subtitle {
+      font-size: 1.3rem;
+    }
+  }
+
+  .challenge,
+  .learnings {
+    background-color: var(--white);
+  }
+
+  .built {
+    background-color: var(--light-gray);
+  }
+
+  .results {
+    background: linear-gradient(180deg, var(--white) 0%, var(--light-gray) 100%);
+  }
+
+  .cta {
+    background-color: var(--light-gray);
+  }
+
+  h2 {
+    text-align: center;
+    margin-bottom: var(--space-xl);
+  }
+
+  .content {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .content p {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--charcoal);
+  }
+
+  @media (min-width: 768px) {
+    .content p {
+      font-size: 1.15rem;
+    }
+  }
+
+  .highlight {
+    font-weight: 700;
+    color: var(--orange);
+    font-size: 1.1rem;
+  }
+
+  @media (min-width: 768px) {
+    .highlight {
+      font-size: 1.25rem;
+    }
+  }
+
+  .built-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  @media (min-width: 768px) {
+    .built-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .built-item {
+    background-color: var(--white);
+    padding: var(--space-lg);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    position: relative;
+  }
+
+  .number {
+    position: absolute;
+    top: var(--space-lg);
+    right: var(--space-lg);
+    width: 40px;
+    height: 40px;
+    background-color: var(--orange);
+    color: var(--white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.1rem;
+    font-family: var(--font-display);
+  }
+
+  .built-item h3 {
+    font-size: 1.3rem;
+    margin-bottom: var(--space-sm);
+    color: var(--charcoal);
+  }
+
+  .built-item p {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 0;
+    color: var(--charcoal);
+  }
+
+  .results-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  @media (min-width: 480px) {
+    .results-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 768px) {
+    .results-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .result-card {
+    background-color: var(--white);
+    padding: var(--space-xl) var(--space-lg);
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    border-top: 4px solid var(--orange);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .result-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  }
+
+  .result-number {
+    font-family: var(--font-display);
+    font-size: 3rem;
+    color: var(--orange);
+    margin-bottom: var(--space-xs);
+    line-height: 1;
+  }
+
+  .result-label {
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--charcoal);
+    margin-bottom: var(--space-xs);
+  }
+
+  .result-detail {
+    font-size: 0.9rem;
+    color: #7f8c8d;
+  }
+
+  .learnings-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .learnings-list li {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    padding-left: var(--space-xl);
+    position: relative;
+    color: var(--charcoal);
+  }
+
+  @media (min-width: 768px) {
+    .learnings-list li {
+      font-size: 1.1rem;
+    }
+  }
+
+  .learnings-list li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--orange);
+    font-weight: 700;
+    font-size: 1.5rem;
+  }
+
+  .learnings-list strong {
+    color: var(--orange);
+  }
+
+  .cta-content {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .cta-content p {
+    font-size: 1.15rem;
+    font-weight: 500;
+    margin-bottom: var(--space-lg);
+    color: var(--charcoal);
+  }
+
+  @media (min-width: 768px) {
+    .cta-content p {
+      font-size: 1.25rem;
+    }
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: var(--space-md);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .button-secondary {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 500;
+    padding: var(--space-sm) var(--space-lg);
+    background-color: transparent;
+    color: var(--blue);
+    border: 2px solid var(--blue);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+  }
+
+  .button-secondary:hover {
+    background-color: var(--blue);
+    color: var(--white);
+    transform: translateY(-2px);
+  }
+</style>

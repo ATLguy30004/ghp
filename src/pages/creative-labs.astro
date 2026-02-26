@@ -1,0 +1,273 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Creative Labs — Hayaan Dangra"
+  description="Teaching kids to code and tutoring at Creative Labs Learning Center."
+>
+  <section class="hero section">
+    <div class="container">
+      <div class="hero-content">
+        <h1>Creative Labs Learning Center</h1>
+        <p class="subtitle">
+          Teaching, tutoring, and building the next generation of creators.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="story section">
+    <div class="container">
+      <h2>The Story</h2>
+      <div class="content">
+        <p>
+          My mom started Creative Labs Learning Center to give kids a space to learn and create. I've been part of it since the beginning — teaching coding basics, running summer camps, and tutoring students who need extra help.
+        </p>
+        <p>
+          What I love about teaching is that it forces you to really understand something. If a 10-year-old asks "but why does the loop start at zero?", you better have a real answer.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="what-i-do section">
+    <div class="container">
+      <h2>What I Do</h2>
+      <div class="grid">
+        <div class="card">
+          <div class="icon">💻</div>
+          <h3>Coding Workshops</h3>
+          <p>Teaching elementary students the basics of coding through fun, hands-on projects.</p>
+        </div>
+        <div class="card">
+          <div class="icon">📚</div>
+          <h3>Math & Science Tutoring</h3>
+          <p>One-on-one and small group tutoring to help students build confidence and master concepts.</p>
+        </div>
+        <div class="card">
+          <div class="icon">☀️</div>
+          <h3>Summer Camp Programs</h3>
+          <p>Running week-long camps where kids build games, animations, and interactive projects.</p>
+        </div>
+        <div class="card">
+          <div class="icon">🎯</div>
+          <h3>Tech Mentoring</h3>
+          <p>One-on-one mentoring for students who want to go deeper into programming and technology.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="learned section">
+    <div class="container">
+      <h2>What I've Learned From Teaching</h2>
+      <div class="content">
+        <ul class="learnings-list">
+          <li>
+            Explaining something simply is harder than understanding it yourself.
+          </li>
+          <li>
+            Kids are fearless with code. They'll try things adults would never attempt.
+          </li>
+          <li>
+            Teaching is the fastest way to find gaps in your own knowledge.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="connection section">
+    <div class="container">
+      <div class="connection-content">
+        <h2>The Connection</h2>
+        <p>
+          Teaching is why I build interactive visualizations — I want to see math concepts click for people the same way they click for me when I can see them visually.
+        </p>
+        <p class="connection-text">
+          When a student finally understands why a loop works or how a function returns a value, that moment of clarity is what keeps me building tools that make learning visible.
+        </p>
+        <a href="/math-explorations" class="button">See My Math Explorations →</a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .hero {
+    background: linear-gradient(135deg, #27AE60 0%, #229954 100%);
+    color: var(--white);
+    padding-top: var(--space-xl);
+    padding-bottom: var(--space-xl);
+  }
+
+  .hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .hero h1 {
+    color: var(--white);
+    margin-bottom: var(--space-md);
+  }
+
+  .subtitle {
+    font-size: 1.15rem;
+    line-height: 1.6;
+    margin-bottom: 0;
+    opacity: 0.95;
+  }
+
+  @media (min-width: 768px) {
+    .subtitle {
+      font-size: 1.3rem;
+    }
+  }
+
+  .story,
+  .learned {
+    background-color: var(--white);
+  }
+
+  .what-i-do {
+    background-color: var(--light-gray);
+  }
+
+  .connection {
+    background: linear-gradient(180deg, var(--white) 0%, var(--light-gray) 100%);
+  }
+
+  h2 {
+    text-align: center;
+    margin-bottom: var(--space-xl);
+  }
+
+  .content {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .content p {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--charcoal);
+  }
+
+  @media (min-width: 768px) {
+    .content p {
+      font-size: 1.15rem;
+    }
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  @media (min-width: 768px) {
+    .grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .card {
+    background-color: var(--white);
+    padding: var(--space-lg);
+    border-radius: 8px;
+    border-left: 4px solid #27AE60;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  }
+
+  .icon {
+    font-size: 2rem;
+    margin-bottom: var(--space-sm);
+  }
+
+  .card h3 {
+    font-size: 1.25rem;
+    margin-bottom: var(--space-sm);
+    color: #27AE60;
+  }
+
+  .card p {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 0;
+    color: var(--charcoal);
+  }
+
+  .learnings-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .learnings-list li {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    padding-left: var(--space-xl);
+    position: relative;
+    color: var(--charcoal);
+  }
+
+  @media (min-width: 768px) {
+    .learnings-list li {
+      font-size: 1.1rem;
+    }
+  }
+
+  .learnings-list li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #27AE60;
+    font-weight: 700;
+    font-size: 1.5rem;
+  }
+
+  .connection-content {
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .connection-content h2 {
+    margin-bottom: var(--space-lg);
+  }
+
+  .connection-content p {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--charcoal);
+    margin-bottom: var(--space-md);
+  }
+
+  @media (min-width: 768px) {
+    .connection-content p {
+      font-size: 1.15rem;
+    }
+  }
+
+  .connection-text {
+    font-style: italic;
+    color: #27AE60;
+    font-weight: 500;
+    margin-bottom: var(--space-xl);
+  }
+
+  .connection-content .button {
+    display: inline-block;
+  }
+</style>

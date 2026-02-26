@@ -1,0 +1,428 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout
+  title="Prime Spirals — Math Explorations | Hayaan Dangra"
+  description="Interactive Ulam spiral visualization revealing hidden diagonal patterns in prime number distribution."
+>
+  <section class="demo-page section">
+    <div class="container">
+      <h1>Prime Spirals: The Ulam Spiral</h1>
+
+      <div class="explanation">
+        <p>In 1963, mathematician Stanislaw Ulam was doodling during a boring meeting. He wrote integers in a spiral pattern and circled the primes. To his surprise, the primes lined up along diagonal lines.</p>
+        <p>Primes are supposed to be random. So why do they form patterns when you arrange them in a spiral?</p>
+      </div>
+
+      <div class="demo-container">
+        <h2>Ulam Spiral</h2>
+        <div class="canvas-wrapper">
+          <canvas id="primesCanvas"></canvas>
+        </div>
+
+        <div class="controls">
+          <div class="control-group">
+            <label for="gridSlider">
+              Grid Size: <span id="gridValue">100</span> × <span id="gridValue2">100</span>
+            </label>
+            <input type="range" id="gridSlider" min="50" max="200" step="10" value="100">
+          </div>
+
+          <div class="control-row">
+            <div class="checkbox-group">
+              <input type="checkbox" id="showNumbers" disabled>
+              <label for="showNumbers">Show numbers (small grids only)</label>
+            </div>
+
+            <div class="checkbox-group">
+              <input type="checkbox" id="highlightDiagonals">
+              <label for="highlightDiagonals">Highlight diagonals</label>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <label for="colorScheme">Color Scheme:</label>
+            <select id="colorScheme">
+              <option value="classic">Classic (Black & White)</option>
+              <option value="heat">Heat Map</option>
+            </select>
+          </div>
+
+          <button id="resetBtn">Reset</button>
+        </div>
+      </div>
+
+      <div class="why-matters">
+        <h2>Why This Matters</h2>
+        <p>The diagonal patterns correspond to quadratic polynomials like n² + n + 41, which produces an unusually high density of primes (40 primes in a row for n = 0 to 39).</p>
+        <p>We still don't fully understand why primes show this structure. It's one of the beautiful open questions in number theory.</p>
+      </div>
+
+      <nav class="demo-nav">
+        <a href="/math-explorations/chaos">← Chaos Theory</a>
+        <a href="/math-explorations/walks">Next: Random Walks →</a>
+      </nav>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .demo-page {
+    padding: var(--space-xl) 0 var(--space-3xl);
+  }
+
+  h1 {
+    text-align: center;
+    margin-bottom: var(--space-xl);
+  }
+
+  h2 {
+    margin-top: var(--space-xl);
+    margin-bottom: var(--space-md);
+  }
+
+  .explanation {
+    max-width: 800px;
+    margin: 0 auto var(--space-2xl);
+    background-color: var(--light-gray);
+    padding: var(--space-lg);
+    border-radius: 8px;
+    border-left: 4px solid var(--orange);
+  }
+
+  .demo-container {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .canvas-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: var(--space-lg);
+  }
+
+  canvas {
+    border: 1px solid var(--mid-gray);
+    border-radius: 4px;
+    background-color: var(--white);
+    max-width: 100%;
+    height: auto;
+  }
+
+  .controls {
+    margin: var(--space-lg) 0;
+    padding: var(--space-md);
+    background-color: var(--light-gray);
+    border-radius: 8px;
+  }
+
+  .control-group {
+    margin-bottom: var(--space-md);
+  }
+
+  .control-group:last-of-type {
+    margin-bottom: 0;
+  }
+
+  .control-row {
+    display: flex;
+    gap: var(--space-lg);
+    margin-bottom: var(--space-md);
+    flex-wrap: wrap;
+  }
+
+  .checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+  }
+
+  .checkbox-group input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }
+
+  .checkbox-group input[type="checkbox"]:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  .checkbox-group label {
+    margin: 0;
+    cursor: pointer;
+    font-weight: 400;
+  }
+
+  label {
+    display: block;
+    margin-bottom: var(--space-xs);
+    font-weight: 500;
+    color: var(--charcoal);
+  }
+
+  #gridValue, #gridValue2 {
+    color: var(--orange);
+    font-weight: 700;
+  }
+
+  input[type="range"] {
+    width: 100%;
+    height: 8px;
+    border-radius: 4px;
+    background: var(--mid-gray);
+    outline: none;
+    -webkit-appearance: none;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--orange);
+    cursor: pointer;
+  }
+
+  input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--orange);
+    cursor: pointer;
+    border: none;
+  }
+
+  select {
+    width: 100%;
+    padding: var(--space-sm);
+    border: 1px solid var(--mid-gray);
+    border-radius: 4px;
+    background-color: var(--white);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    cursor: pointer;
+  }
+
+  button {
+    min-width: 120px;
+    min-height: 44px;
+  }
+
+  .why-matters {
+    max-width: 800px;
+    margin: var(--space-2xl) auto;
+    padding: var(--space-lg);
+    background-color: var(--light-gray);
+    border-radius: 8px;
+    border-left: 4px solid var(--blue);
+  }
+
+  .demo-nav {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-md);
+    margin-top: var(--space-2xl);
+    padding-top: var(--space-xl);
+    border-top: 1px solid var(--mid-gray);
+    flex-wrap: wrap;
+  }
+
+  .demo-nav a {
+    font-weight: 500;
+  }
+
+  @media (max-width: 768px) {
+    .control-row {
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+
+    .demo-nav {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+</style>
+
+<script>
+  const canvas = document.getElementById('primesCanvas') as HTMLCanvasElement;
+  const gridSlider = document.getElementById('gridSlider') as HTMLInputElement;
+  const gridValue = document.getElementById('gridValue') as HTMLSpanElement;
+  const gridValue2 = document.getElementById('gridValue2') as HTMLSpanElement;
+  const showNumbers = document.getElementById('showNumbers') as HTMLInputElement;
+  const highlightDiagonals = document.getElementById('highlightDiagonals') as HTMLInputElement;
+  const colorScheme = document.getElementById('colorScheme') as HTMLSelectElement;
+  const resetBtn = document.getElementById('resetBtn') as HTMLButtonElement;
+
+  function isPrime(n: number): boolean {
+    if (n < 2) return false;
+    if (n === 2) return true;
+    if (n % 2 === 0) return false;
+
+    const sqrt = Math.sqrt(n);
+    for (let i = 3; i <= sqrt; i += 2) {
+      if (n % i === 0) return false;
+    }
+    return true;
+  }
+
+  function drawUlamSpiral() {
+    const gridSize = parseInt(gridSlider.value);
+    gridValue.textContent = gridSize.toString();
+    gridValue2.textContent = gridSize.toString();
+
+    // Enable "Show numbers" only for small grids
+    if (gridSize <= 70) {
+      showNumbers.disabled = false;
+    } else {
+      showNumbers.disabled = true;
+      showNumbers.checked = false;
+    }
+
+    const cellSize = Math.min(600 / gridSize, 10);
+    const canvasSize = gridSize * cellSize;
+
+    canvas.width = canvasSize;
+    canvas.height = canvasSize;
+
+    const ctx = canvas.getContext('2d')!;
+    ctx.fillStyle = '#FFFFFF';
+    ctx.fillRect(0, 0, canvasSize, canvasSize);
+
+    // Generate spiral coordinates
+    const spiral: { x: number; y: number; n: number }[] = [];
+    let x = Math.floor(gridSize / 2);
+    let y = Math.floor(gridSize / 2);
+    let dx = 0;
+    let dy = -1;
+    let n = 1;
+
+    for (let i = 0; i < gridSize * gridSize; i++) {
+      if (x >= 0 && x < gridSize && y >= 0 && y < gridSize) {
+        spiral.push({ x, y, n });
+      }
+
+      if (x === y || (x < 0 && x === -y) || (x > 0 && x === 1 - y)) {
+        const temp = dx;
+        dx = -dy;
+        dy = temp;
+      }
+
+      x += dx;
+      y += dy;
+      n++;
+    }
+
+    // Draw primes
+    const scheme = colorScheme.value;
+
+    // Pre-compute prime grid for heat map mode (avoids O(n²) filtering)
+    const primeGrid: boolean[][] = [];
+    if (scheme === 'heat') {
+      for (let i = 0; i < gridSize; i++) {
+        primeGrid[i] = new Array(gridSize).fill(false);
+      }
+      spiral.forEach(({ x, y, n }) => {
+        if (x >= 0 && x < gridSize && y >= 0 && y < gridSize) {
+          primeGrid[x][y] = isPrime(n);
+        }
+      });
+    }
+
+    spiral.forEach(({ x, y, n }) => {
+      const prime = isPrime(n);
+
+      if (scheme === 'classic') {
+        ctx.fillStyle = prime ? '#2C3E50' : '#F8F9FA';
+      } else {
+        // Heat map: color by local prime density using pre-computed grid
+        let neighbors = 0;
+        for (let dx = -1; dx <= 1; dx++) {
+          for (let dy = -1; dy <= 1; dy++) {
+            const nx = x + dx;
+            const ny = y + dy;
+            if (nx >= 0 && nx < gridSize && ny >= 0 && ny < gridSize && primeGrid[nx][ny]) {
+              neighbors++;
+            }
+          }
+        }
+
+        if (prime) {
+          const intensity = Math.min(255, neighbors * 40);
+          ctx.fillStyle = `rgb(${255 - intensity}, ${100 + intensity / 2}, ${intensity})`;
+        } else {
+          ctx.fillStyle = '#F8F9FA';
+        }
+      }
+
+      ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
+
+      // Show numbers on small grids
+      if (showNumbers.checked && cellSize >= 8) {
+        ctx.fillStyle = prime ? '#FFFFFF' : '#2C3E50';
+        ctx.font = `${cellSize * 0.4}px DM Sans`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(n.toString(), x * cellSize + cellSize / 2, y * cellSize + cellSize / 2);
+      }
+    });
+
+    // Highlight diagonals
+    if (highlightDiagonals.checked) {
+      ctx.strokeStyle = 'rgba(230, 126, 34, 0.3)';
+      ctx.lineWidth = 2;
+
+      // Draw main diagonal lines
+      for (let i = 0; i < 4; i++) {
+        ctx.beginPath();
+        const angle = (Math.PI / 4) + (i * Math.PI / 2);
+        const length = canvasSize * 0.7;
+        const centerX = canvasSize / 2;
+        const centerY = canvasSize / 2;
+        const startX = centerX - Math.cos(angle) * length / 2;
+        const startY = centerY - Math.sin(angle) * length / 2;
+        const endX = centerX + Math.cos(angle) * length / 2;
+        const endY = centerY + Math.sin(angle) * length / 2;
+        ctx.moveTo(startX, startY);
+        ctx.lineTo(endX, endY);
+        ctx.stroke();
+      }
+    }
+
+    // Draw grid lines for larger cells
+    if (cellSize >= 5) {
+      ctx.strokeStyle = 'rgba(0, 0, 0, 0.05)';
+      ctx.lineWidth = 1;
+      for (let i = 0; i <= gridSize; i++) {
+        ctx.beginPath();
+        ctx.moveTo(i * cellSize, 0);
+        ctx.lineTo(i * cellSize, canvasSize);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(0, i * cellSize);
+        ctx.lineTo(canvasSize, i * cellSize);
+        ctx.stroke();
+      }
+    }
+  }
+
+  gridSlider.addEventListener('input', drawUlamSpiral);
+  showNumbers.addEventListener('change', drawUlamSpiral);
+  highlightDiagonals.addEventListener('change', drawUlamSpiral);
+  colorScheme.addEventListener('change', drawUlamSpiral);
+
+  resetBtn.addEventListener('click', () => {
+    gridSlider.value = '100';
+    showNumbers.checked = false;
+    highlightDiagonals.checked = false;
+    colorScheme.value = 'classic';
+    drawUlamSpiral();
+  });
+
+  // Initial draw
+  drawUlamSpiral();
+</script>

@@ -1,0 +1,169 @@
+/* Design System Tokens */
+:root {
+  /* Colors */
+  --white: #FFFFFF;
+  --charcoal: #2C3E50;
+  --blue: #3498DB;
+  --orange: #E67E22;
+  --light-gray: #F8F9FA;
+  --mid-gray: #ECF0F1;
+
+  /* Fonts */
+  --font-body: 'DM Sans', sans-serif;
+  --font-display: 'Bebas Neue', sans-serif;
+
+  /* Spacing Scale */
+  --space-xs: 8px;
+  --space-sm: 16px;
+  --space-md: 24px;
+  --space-lg: 32px;
+  --space-xl: 48px;
+  --space-2xl: 64px;
+  --space-3xl: 96px;
+
+  /* Breakpoints */
+  --bp-sm: 480px;
+  --bp-md: 768px;
+  --bp-lg: 1024px;
+  --bp-xl: 1200px;
+
+  /* Max Width */
+  --max-width: 1200px;
+}
+
+/* Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Base Styles */
+body {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--charcoal);
+  background-color: var(--white);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@media (min-width: 768px) {
+  body {
+    font-size: 18px;
+  }
+}
+
+/* Selection */
+::selection {
+  background-color: var(--blue);
+  color: var(--white);
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  line-height: 1.2;
+  margin-bottom: var(--space-sm);
+  color: var(--charcoal);
+}
+
+h1 {
+  font-size: 2.5rem;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  h1 {
+    font-size: 3.5rem;
+  }
+
+  h2 {
+    font-size: 2.5rem;
+  }
+
+  h3 {
+    font-size: 1.75rem;
+  }
+}
+
+p {
+  margin-bottom: var(--space-md);
+}
+
+/* Links */
+a {
+  color: var(--blue);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--orange);
+}
+
+/* Buttons */
+button,
+.button {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 500;
+  padding: var(--space-sm) var(--space-lg);
+  background-color: var(--blue);
+  color: var(--white);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  display: inline-block;
+  text-align: center;
+}
+
+button:hover,
+.button:hover {
+  background-color: var(--orange);
+  color: var(--white);
+  transform: translateY(-2px);
+}
+
+/* Utility Classes */
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-md);
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding: 0 var(--space-xl);
+  }
+}
+
+.section {
+  padding: var(--space-2xl) 0;
+}
+
+@media (min-width: 768px) {
+  .section {
+    padding: var(--space-3xl) 0;
+  }
+}
+
+/* Images */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}

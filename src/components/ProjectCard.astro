@@ -1,0 +1,89 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  metric: string;
+  href: string;
+  tag: string;
+  accentColor?: string;
+}
+
+const { title, description, metric, href, tag, accentColor = 'var(--blue)' } = Astro.props;
+---
+
+<article class="project-card">
+  <div class="tag" style={`background-color: ${accentColor}`}>
+    {tag}
+  </div>
+  <h3>{title}</h3>
+  <p class="description">{description}</p>
+  <p class="metric">{metric}</p>
+  <a href={href} class="card-link">View Project →</a>
+</article>
+
+<style>
+  .project-card {
+    background-color: var(--white);
+    border: 1px solid var(--mid-gray);
+    border-radius: 8px;
+    padding: var(--space-lg);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .project-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  }
+
+  .tag {
+    display: inline-block;
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: 20px;
+    color: var(--white);
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    width: fit-content;
+  }
+
+  .project-card h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: var(--charcoal);
+  }
+
+  .description {
+    color: var(--charcoal);
+    margin: 0;
+    flex-grow: 1;
+  }
+
+  .metric {
+    font-weight: 700;
+    color: var(--blue);
+    margin: 0;
+    font-size: 1rem;
+  }
+
+  .card-link {
+    color: var(--blue);
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.2s ease;
+    margin-top: var(--space-sm);
+  }
+
+  .card-link:hover {
+    color: var(--orange);
+  }
+
+  @media (min-width: 768px) {
+    .project-card h3 {
+      font-size: 1.75rem;
+    }
+  }
+</style>

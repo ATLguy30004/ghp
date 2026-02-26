@@ -1,0 +1,198 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="About — Hayaan Dangra"
+  description="High school senior at Alliance Academy exploring cyber security, healthcare tech, and math visualizations."
+>
+  <section class="hero section">
+    <div class="container">
+      <h1>About Me</h1>
+    </div>
+  </section>
+
+  <section class="bio section">
+    <div class="container">
+      <div class="content">
+        <p>
+          I'm Hayaan Dangra, a high school senior at Alliance Academy in Georgia.
+        </p>
+        <p>
+          I build things on the internet — websites, tools, visualizations — and I've been doing it since I realized that the best way to learn something is to make something with it.
+        </p>
+        <p>
+          My biggest project so far: I built the website for my family's food business (Elote King), optimized the SEO, and helped sell out 2 events from a landing page I coded.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="current-work section">
+    <div class="container">
+      <h2>What I'm Into Right Now</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>Math Explorations</h3>
+          <p>GHP semifinalist, building interactive visualizations to explore chaos theory, prime patterns, and wave mathematics.</p>
+        </div>
+        <div class="card">
+          <h3>Cyber Security</h3>
+          <p>School pathway at Alliance Academy — learning defense strategies, ethical hacking, and network security.</p>
+        </div>
+        <div class="card">
+          <h3>Healthcare Technology</h3>
+          <p>School pathway at Alliance Academy — exploring the intersection of technology and healthcare delivery.</p>
+        </div>
+        <div class="card">
+          <h3>Teaching Kids to Code</h3>
+          <p>At Creative Labs Learning Center — helping the next generation learn to build and create.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="stack section">
+    <div class="container">
+      <h2>My Stack</h2>
+      <div class="content">
+        <ul class="stack-list">
+          <li>HTML, CSS, JavaScript</li>
+          <li>Astro (static sites)</li>
+          <li>SEO & analytics</li>
+          <li>AI-assisted development (vibe coding)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="next section">
+    <div class="container">
+      <h2>What's Next</h2>
+      <div class="content">
+        <p>
+          I'm looking for the kind of challenge where I can go deeper — whether that's GHP this summer, a cyber security project, or the next business problem that needs a website.
+        </p>
+        <p>
+          <!-- TODO: Replace # with Hayaan's actual profile URLs when created -->
+          If you want to follow what I'm building, find me on <a href="#">X</a> or <a href="#">LinkedIn</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .hero {
+    background-color: var(--light-gray);
+    padding-top: var(--space-xl);
+    padding-bottom: var(--space-xl);
+    text-align: center;
+  }
+
+  .hero h1 {
+    margin-bottom: 0;
+  }
+
+  .bio,
+  .stack,
+  .next {
+    background-color: var(--white);
+  }
+
+  .current-work {
+    background-color: var(--light-gray);
+  }
+
+  .content {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .content p {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--charcoal);
+  }
+
+  @media (min-width: 768px) {
+    .content p {
+      font-size: 1.15rem;
+    }
+  }
+
+  h2 {
+    text-align: center;
+    margin-bottom: var(--space-xl);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  @media (min-width: 768px) {
+    .grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .card {
+    background-color: var(--white);
+    padding: var(--space-lg);
+    border-radius: 8px;
+    border-left: 4px solid var(--blue);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  }
+
+  .card h3 {
+    font-size: 1.25rem;
+    margin-bottom: var(--space-sm);
+    color: var(--blue);
+  }
+
+  .card p {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 0;
+  }
+
+  .stack-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .stack-list li {
+    font-size: 1.1rem;
+    padding-left: var(--space-md);
+    position: relative;
+    color: var(--charcoal);
+  }
+
+  .stack-list li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--blue);
+    font-weight: 700;
+  }
+
+  .next .content {
+    text-align: center;
+  }
+
+  .next a {
+    font-weight: 700;
+  }
+</style>
