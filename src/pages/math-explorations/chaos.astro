@@ -11,12 +11,12 @@ import Layout from '../../layouts/Layout.astro';
       <h1>Chaos Theory: The Logistic Map</h1>
 
       <div class="explanation">
-        <p>The logistic map is one of the simplest equations that produces chaos:</p>
+        <p>I found this equation in a YouTube rabbit hole at 2am. One line of math — no randomness anywhere — and it produces total chaos:</p>
         <div class="equation">
           x<sub>n+1</sub> = r · x<sub>n</sub> · (1 - x<sub>n</sub>)
         </div>
-        <p>It models population growth with limited resources. The parameter <strong>r</strong> controls the growth rate. Watch what happens as you increase r — the system goes from stable to periodic to completely chaotic.</p>
-        <p>This is why weather is hard to predict. Tiny changes in initial conditions create wildly different outcomes.</p>
+        <p>It's supposed to model population growth. The parameter <strong>r</strong> is the growth rate. At low r, the system settles down to one value. Crank it up and it splits into 2 values, then 4, then 8... then suddenly it just breaks. Pure chaos from a formula you could write on a sticky note.</p>
+        <p>This is the part that got me — there's no randomness in the equation. None. But the output looks completely random. That's what chaos theory actually means, and I didn't really get it until I could see it happening.</p>
       </div>
 
       <div class="demo-container">
@@ -42,9 +42,9 @@ import Layout from '../../layouts/Layout.astro';
       </div>
 
       <div class="why-matters">
-        <h2>Why This Matters</h2>
-        <p>The logistic map shows that deterministic systems (no randomness!) can produce behavior that looks completely random. This discovery in the 1970s launched the field of chaos theory.</p>
-        <p>The bifurcation diagram above is one of the most famous images in mathematics. Notice the period-doubling cascade — the system splits from 1 value to 2, then 4, then 8... then suddenly chaos.</p>
+        <h2>What I'm Still Thinking About</h2>
+        <p>The thing that keeps bugging me: the bifurcation diagram has structure <em>inside</em> the chaos. If you look carefully past r ≈ 3.57, there are these tiny windows where order comes back — the system briefly stabilizes before going chaotic again. The chaos isn't uniform. There's a pattern to how the chaos itself is organized.</p>
+        <p>I want to understand why. I've read about Feigenbaum's constant (the ratio between bifurcation intervals approaches 4.669...) and it's the same constant for completely different equations. That's wild — different systems, same underlying structure. I'm still figuring out why that's true.</p>
       </div>
 
       <nav class="demo-nav">

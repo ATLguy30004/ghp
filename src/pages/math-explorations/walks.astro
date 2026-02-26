@@ -11,8 +11,8 @@ import Layout from '../../layouts/Layout.astro';
       <h1>Random Walks</h1>
 
       <div class="explanation">
-        <p>Start at the center. Flip a coin four times: heads = north, tails = south, heads = east, tails = west. Where do you end up?</p>
-        <p>Run this experiment 1000 times. The average distance from start grows with √n (square root of the number of steps), not n. This is one of the most important results in probability.</p>
+        <p>Here's the experiment: stand in the middle of a field. Each step, flip a coin to pick a direction — north, south, east, or west — and walk one step. Do this 500 times. Where do you end up?</p>
+        <p>I expected the answer to be "pretty far away." It's not. The average distance only grows with √n, not n. So 500 random steps only takes you about as far as 22 deliberate steps. I ran this simulation over and over because I didn't believe the numbers at first.</p>
       </div>
 
       <div class="demo-container">
@@ -79,9 +79,9 @@ import Layout from '../../layouts/Layout.astro';
       </div>
 
       <div class="why-matters">
-        <h2>Why This Matters</h2>
-        <p>Random walks model everything from particle diffusion to stock prices to how rumors spread through networks.</p>
-        <p>The √n law means that doubling the number of steps only increases the expected distance by about 41% (√2 ≈ 1.41). This is why diversification works in investing and why it takes a long time for a drop of ink to spread through water.</p>
+        <h2>What Surprised Me</h2>
+        <p>Run the endpoint simulation with 1000 walks. The dots form a circle. Every time. Pure randomness — each walk going in completely random directions — and they cluster in a perfect ring pattern. That broke my brain for a while.</p>
+        <p>The √n thing also connects to stuff I didn't expect. It's why a drop of ink takes forever to spread through water (diffusion), and apparently it's related to why stock market diversification works. Doubling your random steps only gets you ~41% farther (√2 ≈ 1.41). Randomness is way more structured than I thought.</p>
       </div>
 
       <nav class="demo-nav">

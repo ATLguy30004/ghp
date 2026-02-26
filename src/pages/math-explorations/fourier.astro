@@ -11,9 +11,8 @@ import Layout from '../../layouts/Layout.astro';
       <h1>Fourier Series: Building Waves</h1>
 
       <div class="explanation">
-        <p>Any repeating wave — no matter how jagged or complex — can be built from simple sine waves added together.</p>
-        <p>A square wave looks nothing like a sine wave. But watch what happens when I add sine waves with the right frequencies and amplitudes. More terms = closer approximation.</p>
-        <p>This is how MP3s compress music. Instead of storing the full waveform, they store the 'recipe' of sine waves.</p>
+        <p>This one started when I learned that your phone breaks every sound into sine waves. Every song, every voice note, every notification — just sine waves with different frequencies stacked on top of each other. That sounded wrong to me. A square wave has sharp corners. Sine waves are smooth. How?</p>
+        <p>So I built this. Start with 1 sine wave — it looks nothing like a square wave. Add another. And another. By the time you hit 10 terms, it's getting close. By 50, it's nearly perfect. The sharp corners are the last thing to converge, and they technically never do (that's called the Gibbs phenomenon, and it's still weird to me).</p>
       </div>
 
       <div class="demo-container">
@@ -55,9 +54,9 @@ import Layout from '../../layouts/Layout.astro';
       </div>
 
       <div class="why-matters">
-        <h2>Why This Matters</h2>
-        <p>Joseph Fourier discovered this in 1807 while studying heat flow. It was so controversial that even Lagrange objected — the idea that any function could be decomposed into sine waves seemed impossible.</p>
-        <p>Today, Fourier analysis is everywhere: audio compression (MP3), image compression (JPEG), noise cancellation, medical imaging (MRI), and signal processing in every phone you've ever used.</p>
+        <h2>What I Can't Stop Thinking About</h2>
+        <p>When Fourier proposed this in 1807, other mathematicians basically said "no way." Lagrange — one of the greatest mathematicians alive at the time — thought it was wrong. The idea that ANY wave could be broken into sine waves seemed too good to be true. It took decades for the math community to accept it.</p>
+        <p>What gets me is how universal it is. MP3s, JPEGs, MRIs, noise-cancelling headphones, your phone's signal processing — all of it runs on this same 200-year-old idea. Toggle "show components" with a few terms and you can literally watch the recipe come together. That's the part that made it click for me — seeing each ingredient separately.</p>
       </div>
 
       <nav class="demo-nav">
