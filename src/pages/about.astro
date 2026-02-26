@@ -16,13 +16,13 @@ import Layout from '../layouts/Layout.astro';
     <div class="container">
       <div class="content">
         <p>
-          I'm Hayaan Dangra, a high school senior at Alliance Academy in Georgia.
+          I'm Hayaan Dangra, a high school senior at Alliance Academy in Georgia. Born to immigrant parents and growing up in a rural community, I was very lonely. I spent lots of time with a pencil and a notebook. I found that the structured nature of math quantified the uncertainty of life into an objective truth that could be deduced through logic.
         </p>
         <p>
-          I build things on the internet — websites, tools, visualizations — and I've been doing it since I realized that the best way to learn something is to make something with it.
+          That's still how I work. I've been on math teams since elementary school — Mathletes, UGA Math Competition, KSU, MathLeague. I placed 2nd at State in FBLA Data Analysis (NYC air quality proposal). I compete in cybersecurity (Cyberavengers, NCL, CyberPatriot) because math is the underlying mechanism that allows the Internet to function.
         </p>
         <p>
-          My biggest project so far: I built the website for my family's food business (Elote King), optimized the SEO, and helped sell out 2 events from a landing page I coded.
+          For the past 3 years, I've been CFO of Elote King, my family's food business. I use regression and prediction algorithms based on market data to make financial decisions. I also work as an AI Automation Developer at Pure Tech Innovation, where I build workflows that have increased productivity by 100%. Everything I do — business, code, security, teaching — is math applied to real problems.
         </p>
       </div>
     </div>
@@ -34,19 +34,19 @@ import Layout from '../layouts/Layout.astro';
       <div class="grid">
         <div class="card">
           <h3>Math Explorations</h3>
-          <p>GHP semifinalist, building interactive visualizations to explore chaos theory, prime patterns, and wave mathematics.</p>
+          <p>County-level GHP nominee, building interactive visualizations to explore chaos theory, prime patterns, and wave mathematics. Game theory is where I connect math to interests I haven't discovered yet.</p>
         </div>
         <div class="card">
           <h3>Cyber Security</h3>
-          <p>School pathway at Alliance Academy — learning defense strategies, ethical hacking, and network security.</p>
+          <p>Cyberavengers, NCL, CyberPatriot. Network security isn't just protocols — it's number theory, cryptography, and probability. CompTIA Network+ certified.</p>
         </div>
         <div class="card">
-          <h3>Healthcare Technology</h3>
-          <p>School pathway at Alliance Academy — exploring the intersection of technology and healthcare delivery.</p>
+          <h3>AI & Automation</h3>
+          <p>Building workflows at Pure Tech Innovation with Claude, N8N, and Cursor. Automation is applied logic — turning repetitive tasks into functions that can be optimized.</p>
         </div>
         <div class="card">
-          <h3>Teaching Kids to Code</h3>
-          <p>At Creative Labs Learning Center — helping the next generation learn to build and create.</p>
+          <h3>Teaching</h3>
+          <p>At Creative Labs Learning Center — teaching forces you to break math down. If you can't explain why a loop starts at zero, you don't actually understand iteration.</p>
         </div>
       </div>
     </div>
@@ -54,13 +54,30 @@ import Layout from '../layouts/Layout.astro';
 
   <section class="stack section">
     <div class="container">
+      <h2>Education & Achievements</h2>
+      <div class="content">
+        <ul class="stack-list">
+          <li>Alliance Academy for Innovation, Class of 2027</li>
+          <li>GPA 4.3, SAT 1540 (790 Math)</li>
+          <li>AP Calc AB/BC, AP CS A, AP CS Principles, AP Precalculus, AP Bio</li>
+          <li>CompTIA Network+ Certified</li>
+          <li>FBLA Data Analysis — 2nd at State</li>
+          <li>Math competitions: UGA, KSU, MathLeague, Mathletes</li>
+          <li>County-level GHP Nominee</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="tech-stack section">
+    <div class="container">
       <h2>My Stack</h2>
       <div class="content">
         <ul class="stack-list">
           <li>HTML, CSS, JavaScript</li>
           <li>Astro (static sites)</li>
+          <li>AI automation (Claude, N8N, Cursor, Perplexity)</li>
           <li>SEO & analytics</li>
-          <li>AI-assisted development (vibe coding)</li>
         </ul>
       </div>
     </div>
@@ -95,9 +112,13 @@ import Layout from '../layouts/Layout.astro';
   }
 
   .bio,
-  .stack,
+  .tech-stack,
   .next {
     background-color: var(--white);
+  }
+
+  .stack {
+    background-color: var(--light-gray);
   }
 
   .current-work {

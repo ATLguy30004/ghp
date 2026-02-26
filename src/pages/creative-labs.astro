@@ -22,10 +22,10 @@ import Layout from '../layouts/Layout.astro';
       <h2>The Story</h2>
       <div class="content">
         <p>
-          My mom started Creative Labs Learning Center to give kids a space to learn and create. I've been part of it since the beginning — teaching coding basics, running summer camps, and tutoring students who need extra help.
+          My mom started Creative Labs Learning Center to give kids a space to learn and create. I've been part of it since the beginning — teaching coding basics, running summer camps, and tutoring students who need extra help. A lot of my students have special needs (Autism, Asperger's), and I became a program liaison connecting low-income families to resources they didn't know existed.
         </p>
         <p>
-          What I love about teaching is that it forces you to really understand something. If a 10-year-old asks "but why does the loop start at zero?", you better have a real answer.
+          What I love about teaching is that it forces you to break down every step. If a 10-year-old asks "but why does the loop start at zero?", you better have a real answer. Teaching math and code is teaching logic — and if you can't explain why something is true, you don't actually understand it.
         </p>
       </div>
     </div>
@@ -38,22 +38,22 @@ import Layout from '../layouts/Layout.astro';
         <div class="card">
           <div class="icon">💻</div>
           <h3>Coding Workshops</h3>
-          <p>Teaching elementary students the basics of coding through fun, hands-on projects.</p>
+          <p>Teaching elementary students the basics of programming — loops, conditionals, functions. Breaking down abstract logic into something visual and concrete.</p>
         </div>
         <div class="card">
           <div class="icon">📚</div>
-          <h3>Math & Science Tutoring</h3>
-          <p>One-on-one and small group tutoring to help students build confidence and master concepts.</p>
+          <h3>Special Needs Tutoring</h3>
+          <p>Working one-on-one with students who have Autism or Asperger's. Math and coding are patterns, and patterns are teachable when you find the right approach.</p>
         </div>
         <div class="card">
           <div class="icon">☀️</div>
-          <h3>Summer Camp Programs</h3>
-          <p>Running week-long camps where kids build games, animations, and interactive projects.</p>
+          <h3>Summer Camp Counselor</h3>
+          <p>Running week-long camps where kids build games, animations, and interactive projects. The best way to learn is to make something that works.</p>
         </div>
         <div class="card">
           <div class="icon">🎯</div>
-          <h3>Tech Mentoring</h3>
-          <p>One-on-one mentoring for students who want to go deeper into programming and technology.</p>
+          <h3>Program Liaison</h3>
+          <p>Connecting low-income families to educational resources. Not just tutoring — helping families access opportunities they didn't know existed.</p>
         </div>
       </div>
     </div>
@@ -78,15 +78,29 @@ import Layout from '../layouts/Layout.astro';
     </div>
   </section>
 
+  <section class="ponix section">
+    <div class="container">
+      <h2>Ponix Hydroponics</h2>
+      <div class="content">
+        <p>
+          Through Creative Labs, we received a USDA grant via Ponix to build hydroponic towers on site. I designed and built the systems, then used regression models to calculate the ideal nutritional growth environments — NPK ratios, pH levels, light cycles.
+        </p>
+        <p>
+          We grew lettuce and distributed it to food drives. The math wasn't theoretical — it was trial and error meets regression analysis. Every harvest was a data point. Every adjustment was a hypothesis test. The plants either grew or they didn't. Math made the difference.
+        </p>
+      </div>
+    </div>
+  </section>
+
   <section class="connection section">
     <div class="container">
       <div class="connection-content">
         <h2>The Connection</h2>
         <p>
-          Teaching is why I build interactive visualizations — I want to see math concepts click for people the same way they click for me when I can see them visually.
+          Teaching forces you to break math down to first principles. You can't fake understanding when a kid asks "why." Hydroponic modeling is applied statistics — regression analysis in real time. Teaching and growing plants are both about finding the variables that actually matter.
         </p>
         <p class="connection-text">
-          When a student finally understands why a loop works or how a function returns a value, that moment of clarity is what keeps me building tools that make learning visible.
+          That's why I build interactive math visualizations — I want to see concepts click for people the same way they click for me when I can see them visually. When a student finally understands why a loop starts at zero or how pH affects nitrogen uptake, that moment of clarity is what keeps me building tools that make learning visible.
         </p>
         <a href="/math-explorations" class="button">See My Math Explorations →</a>
       </div>
@@ -127,16 +141,17 @@ import Layout from '../layouts/Layout.astro';
   }
 
   .story,
-  .learned {
+  .ponix {
     background-color: var(--white);
   }
 
-  .what-i-do {
+  .what-i-do,
+  .connection {
     background-color: var(--light-gray);
   }
 
-  .connection {
-    background: linear-gradient(180deg, var(--white) 0%, var(--light-gray) 100%);
+  .learned {
+    background-color: var(--white);
   }
 
   h2 {
