@@ -1,0 +1,659 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout
+  title="Perpendicular Bisector — Hayaan Dangra"
+  description="Interactive geometry tool — drag points and watch midpoints, connecting lines, and the perpendicular bisector update in real time."
+>
+  <section class="demo-page section">
+    <div class="container">
+      <h1>Perpendicular Bisector</h1>
+
+      <div class="explanation">
+        <p>I built a version of this in Desmos in 7th grade for a class project. The assignment was basically "make something with geometric constructions" and I went way too deep into it.</p>
+        <p>Here's what it does: you've got two line segments (drag the blue points). The tool finds the midpoint of each segment, draws a line connecting those two midpoints, then finds the perpendicular bisector of THAT new line.</p>
+        <p>What I think is cool about it: all four of the original points are completely random, but the perpendicular bisector is perfectly determined by them. No matter where you drag the points, the math gives you exactly one answer. Drag them fast and watch the bisector snap into place in real time.</p>
+        <p>Try getting the two original segments to be parallel — see what happens to the bisector.</p>
+      </div>
+
+      <div class="demo-container">
+        <h2>Drag the Points</h2>
+        <p class="canvas-hint">Drag the blue points to move them</p>
+        <canvas
+          id="bisectorCanvas"
+          role="img"
+          aria-label="Interactive perpendicular bisector — drag the blue points to explore midpoints and the perpendicular bisector line"
+          tabindex="0"
+        ></canvas>
+
+        <div class="controls">
+          <div class="button-group">
+            <button id="resetBtn">Reset Points</button>
+            <button id="toggleLabelsBtn">Hide Labels</button>
+          </div>
+
+          <div class="stats-panel" id="statsPanel">
+            <div class="stat-row">
+              <span class="stat-label">M1</span>
+              <span class="stat-value" id="statM1">—</span>
+            </div>
+            <div class="stat-row">
+              <span class="stat-label">M2</span>
+              <span class="stat-value" id="statM2">—</span>
+            </div>
+            <div class="stat-row">
+              <span class="stat-label">Midpoint line slope</span>
+              <span class="stat-value" id="statSlope">—</span>
+            </div>
+            <div class="stat-row">
+              <span class="stat-label">Bisector slope</span>
+              <span class="stat-value" id="statBisectorSlope">—</span>
+            </div>
+            <div class="stat-row">
+              <span class="stat-label">Bisector equation</span>
+              <span class="stat-value" id="statEquation">—</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="why-matters">
+        <h2>What I Keep Coming Back To</h2>
+        <p>The reason this ended up as my Desmos project is that it felt like a trick. You give me four random points and I can derive this very specific line from them. The perpendicular bisector shows up in real geometry problems — it's how you find the center of a circle from three points on its edge, which is how engineers fit curves to roads and bridges.</p>
+        <p>What I'm still working out: the relationship between the original two segments and the bisector isn't obvious. Change just one point and the whole bisector jumps. I want to understand that sensitivity better.</p>
+      </div>
+
+      <nav class="demo-nav">
+        <a href="/math-explorations">← Back to Math Explorations</a>
+        <a href="/math-explorations/geometric-series">Next: Geometric Series →</a>
+      </nav>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .demo-page {
+    padding: var(--space-xl) 0 var(--space-3xl);
+  }
+
+  h1 {
+    text-align: center;
+    margin-bottom: var(--space-xl);
+  }
+
+  h2 {
+    margin-top: var(--space-xl);
+    margin-bottom: var(--space-md);
+  }
+
+  .explanation {
+    max-width: 800px;
+    margin: 0 auto var(--space-2xl);
+    background-color: var(--light-gray);
+    padding: var(--space-lg);
+    border-radius: 8px;
+    border-left: 4px solid var(--blue);
+  }
+
+  .explanation p:last-child {
+    margin-bottom: 0;
+  }
+
+  .demo-container {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .canvas-hint {
+    font-size: 0.875rem;
+    color: var(--charcoal);
+    opacity: 0.6;
+    margin-bottom: var(--space-sm);
+    font-style: italic;
+  }
+
+  canvas {
+    width: 100%;
+    height: 350px;
+    border: 1px solid var(--mid-gray);
+    border-radius: 4px;
+    background-color: var(--white);
+    display: block;
+    cursor: crosshair;
+    touch-action: none;
+  }
+
+  @media (min-width: 768px) {
+    canvas {
+      height: 500px;
+    }
+  }
+
+  .controls {
+    margin: var(--space-lg) 0;
+    padding: var(--space-md);
+    background-color: var(--light-gray);
+    border-radius: 8px;
+  }
+
+  .button-group {
+    display: flex;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+    margin-bottom: var(--space-md);
+  }
+
+  button {
+    min-width: 120px;
+    min-height: 44px;
+  }
+
+  .stats-panel {
+    background-color: var(--white);
+    border-left: 4px solid var(--orange);
+    border-radius: 4px;
+    padding: var(--space-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .stat-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+    font-size: 0.875rem;
+  }
+
+  @media (min-width: 768px) {
+    .stat-row {
+      font-size: 0.9rem;
+    }
+  }
+
+  .stat-label {
+    font-weight: 600;
+    color: var(--charcoal);
+    white-space: nowrap;
+  }
+
+  .stat-value {
+    color: #B85515;
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+    text-align: right;
+  }
+
+  .why-matters {
+    max-width: 800px;
+    margin: var(--space-2xl) auto;
+    padding: var(--space-lg);
+    background-color: var(--light-gray);
+    border-radius: 8px;
+    border-left: 4px solid var(--orange);
+  }
+
+  .why-matters p:last-child {
+    margin-bottom: 0;
+  }
+
+  .demo-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+    margin-top: var(--space-2xl);
+    padding-top: var(--space-xl);
+    border-top: 1px solid var(--mid-gray);
+    flex-wrap: wrap;
+  }
+
+  @media (min-width: 768px) {
+    .demo-nav {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: initial;
+    }
+  }
+
+  .demo-nav a {
+    font-weight: 500;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+
+</style>
+
+<script>
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const canvas = document.getElementById('bisectorCanvas') as HTMLCanvasElement;
+  const resetBtn = document.getElementById('resetBtn') as HTMLButtonElement;
+  const toggleLabelsBtn = document.getElementById('toggleLabelsBtn') as HTMLButtonElement;
+  const statM1 = document.getElementById('statM1') as HTMLSpanElement;
+  const statM2 = document.getElementById('statM2') as HTMLSpanElement;
+  const statSlope = document.getElementById('statSlope') as HTMLSpanElement;
+  const statBisectorSlope = document.getElementById('statBisectorSlope') as HTMLSpanElement;
+  const statEquation = document.getElementById('statEquation') as HTMLSpanElement;
+
+  // Normalized 0-1 point positions — safe across resizes
+  const DEFAULTS = {
+    A: { nx: 0.18, ny: 0.28 },
+    B: { nx: 0.42, ny: 0.62 },
+    C: { nx: 0.58, ny: 0.22 },
+    D: { nx: 0.82, ny: 0.68 },
+  };
+
+  type PointKey = 'A' | 'B' | 'C' | 'D';
+
+  interface NPoint { nx: number; ny: number; }
+  const points: Record<PointKey, NPoint> = {
+    A: { ...DEFAULTS.A },
+    B: { ...DEFAULTS.B },
+    C: { ...DEFAULTS.C },
+    D: { ...DEFAULTS.D },
+  };
+
+  let showLabels = true;
+  let dragTarget: PointKey | null = null;
+  let selectedPointIndex = 0;
+  let canvasWidth = 0;
+  let canvasHeight = 0;
+
+  const pointKeys: PointKey[] = ['A', 'B', 'C', 'D'];
+
+  // --- Canvas setup ---
+  function setupCanvas() {
+    const dpr = window.devicePixelRatio || 1;
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    canvasWidth = rect.width;
+    canvasHeight = rect.height;
+    const ctx = canvas.getContext('2d')!;
+    ctx.scale(dpr, dpr);
+    return ctx;
+  }
+
+  // --- Coord helpers ---
+  function toScreen(nx: number, ny: number) {
+    return { x: nx * canvasWidth, y: ny * canvasHeight };
+  }
+
+  function toNorm(x: number, y: number) {
+    return { nx: x / canvasWidth, ny: y / canvasHeight };
+  }
+
+  function fmt(n: number, digits = 1) {
+    return n.toFixed(digits);
+  }
+
+  // --- Line extension to canvas edges ---
+  function lineToEdge(
+    ctx: CanvasRenderingContext2D,
+    px: number,
+    py: number,
+    slope: number | 'vertical' | 'horizontal'
+  ) {
+    const w = canvasWidth;
+    const h = canvasHeight;
+    let x0: number, y0: number, x1: number, y1: number;
+
+    if (slope === 'vertical') {
+      x0 = px; y0 = 0;
+      x1 = px; y1 = h;
+    } else if (slope === 'horizontal') {
+      x0 = 0; y0 = py;
+      x1 = w; y1 = py;
+    } else {
+      // y = slope*(x - px) + py
+      // Intersect with x=0, x=w, y=0, y=h
+      const candidates: Array<[number, number]> = [
+        [0,     slope * (0 - px) + py],
+        [w,     slope * (w - px) + py],
+        [Math.abs(slope) > 0.0001 ? (0 - py) / slope + px : Infinity, 0],
+        [Math.abs(slope) > 0.0001 ? (h - py) / slope + px : Infinity, h],
+      ];
+      const valid = candidates.filter(([x, y]) => x >= -1 && x <= w + 1 && y >= -1 && y <= h + 1);
+      if (valid.length < 2) return;
+      [x0, y0] = valid[0];
+      [x1, y1] = valid[valid.length - 1];
+    }
+
+    ctx.beginPath();
+    ctx.moveTo(x0, y0);
+    ctx.lineTo(x1, y1);
+    ctx.stroke();
+  }
+
+  // --- Main draw ---
+  function draw() {
+    const ctx = setupCanvas();
+
+    // Clear
+    ctx.fillStyle = '#FFFFFF';
+    ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+
+    const A = toScreen(points.A.nx, points.A.ny);
+    const B = toScreen(points.B.nx, points.B.ny);
+    const C = toScreen(points.C.nx, points.C.ny);
+    const D = toScreen(points.D.nx, points.D.ny);
+
+    // Midpoints M1 and M2
+    const M1 = { x: (A.x + B.x) / 2, y: (A.y + B.y) / 2 };
+    const M2 = { x: (C.x + D.x) / 2, y: (C.y + D.y) / 2 };
+
+    // Check if M1 === M2 (degenerate)
+    const tooClose = Math.hypot(M2.x - M1.x, M2.y - M1.y) < 4;
+
+    // --- LAYER 1: Original segments (extended slightly as guides) ---
+    // Segment AB — light blue
+    ctx.strokeStyle = 'rgba(52,152,219,0.5)';
+    ctx.lineWidth = 2;
+    ctx.setLineDash([]);
+
+    function extendedSegment(
+      ctx: CanvasRenderingContext2D,
+      p1: {x:number,y:number},
+      p2: {x:number,y:number},
+      ext = 20
+    ) {
+      const dx = p2.x - p1.x;
+      const dy = p2.y - p1.y;
+      const len = Math.hypot(dx, dy) || 1;
+      const ux = dx / len;
+      const uy = dy / len;
+      ctx.beginPath();
+      ctx.moveTo(p1.x - ux * ext, p1.y - uy * ext);
+      ctx.lineTo(p2.x + ux * ext, p2.y + uy * ext);
+      ctx.stroke();
+    }
+
+    ctx.strokeStyle = 'rgba(52,152,219,0.5)';
+    extendedSegment(ctx, A, B);
+
+    // Segment CD — light orange
+    ctx.strokeStyle = 'rgba(230,126,34,0.5)';
+    extendedSegment(ctx, C, D);
+
+    if (!tooClose) {
+      // --- LAYER 3: Midpoint connecting line (dashed green) ---
+      const dx12 = M2.x - M1.x;
+      const dy12 = M2.y - M1.y;
+      const isVertical12 = Math.abs(dx12) < 0.5;
+      const slope12 = isVertical12 ? Infinity : dy12 / dx12;
+
+      ctx.strokeStyle = '#27AE60';
+      ctx.lineWidth = 2;
+      ctx.setLineDash([8, 4]);
+
+      if (isVertical12) {
+        lineToEdge(ctx, M1.x, M1.y, 'vertical');
+      } else {
+        lineToEdge(ctx, M1.x, M1.y, slope12);
+      }
+      ctx.setLineDash([]);
+
+      // --- LAYER 4 & 5: Perpendicular bisector ---
+      const P = { x: (M1.x + M2.x) / 2, y: (M1.y + M2.y) / 2 };
+
+      let bisectorSlope: number | 'vertical' | 'horizontal';
+      if (isVertical12) {
+        bisectorSlope = 'horizontal';
+      } else if (Math.abs(slope12) < 0.0001) {
+        bisectorSlope = 'vertical';
+      } else {
+        bisectorSlope = -1 / slope12;
+      }
+
+      ctx.strokeStyle = '#E67E22';
+      ctx.lineWidth = 3;
+      ctx.setLineDash([]);
+      lineToEdge(ctx, P.x, P.y, bisectorSlope);
+
+      // P dot
+      ctx.beginPath();
+      ctx.arc(P.x, P.y, 6, 0, Math.PI * 2);
+      ctx.fillStyle = '#E67E22';
+      ctx.fill();
+
+      // --- Update stats ---
+      const mx1 = M1.x / canvasWidth * 100;
+      const my1 = M1.y / canvasHeight * 100;
+      const mx2 = M2.x / canvasWidth * 100;
+      const my2 = M2.y / canvasHeight * 100;
+
+      statM1.textContent = `(${fmt(mx1)}, ${fmt(my1)})`;
+      statM2.textContent = `(${fmt(mx2)}, ${fmt(my2)})`;
+
+      if (isVertical12) {
+        statSlope.textContent = 'undefined (vertical)';
+        statBisectorSlope.textContent = '0 (horizontal)';
+        statEquation.textContent = `y = ${fmt(P.y / canvasHeight * 100)}`;
+      } else if (Math.abs(slope12) < 0.0001) {
+        statSlope.textContent = '0 (horizontal)';
+        statBisectorSlope.textContent = 'undefined (vertical)';
+        statEquation.textContent = `x = ${fmt(P.x / canvasWidth * 100)}`;
+      } else {
+        const m = slope12;
+        const mp = -1 / slope12;
+        const bIntercept = P.y / canvasHeight * 100 - mp * (P.x / canvasWidth * 100);
+        statSlope.textContent = fmt(m, 3);
+        statBisectorSlope.textContent = fmt(mp, 3);
+        const sign = bIntercept >= 0 ? '+' : '';
+        statEquation.textContent = `y = ${fmt(mp, 2)}x ${sign}${fmt(bIntercept, 2)}`;
+      }
+    } else {
+      // Degenerate: M1 and M2 are the same point
+      statM1.textContent = '—';
+      statM2.textContent = '—';
+      statSlope.textContent = 'M1 = M2 (move points apart)';
+      statBisectorSlope.textContent = '—';
+      statEquation.textContent = '—';
+
+      // Warning
+      ctx.fillStyle = 'rgba(230,126,34,0.15)';
+      ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+      ctx.fillStyle = '#E67E22';
+      ctx.font = '14px DM Sans, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('M1 and M2 are too close — drag points apart', canvasWidth / 2, canvasHeight / 2);
+      ctx.textAlign = 'left';
+    }
+
+    // --- LAYER 2: Midpoint dots M1 and M2 ---
+    [M1, M2].forEach((M, i) => {
+      ctx.beginPath();
+      ctx.arc(M.x, M.y, 8, 0, Math.PI * 2);
+      ctx.fillStyle = '#27AE60';
+      ctx.fill();
+
+      if (showLabels) {
+        ctx.fillStyle = '#27AE60';
+        ctx.font = 'bold 13px DM Sans, sans-serif';
+        ctx.fillText(`M${i + 1}`, M.x + 12, M.y - 4);
+      }
+    });
+
+    // --- LAYER 6 & 7: Draggable points A, B, C, D ---
+    const labeled: Array<[PointKey, {x:number,y:number}]> = [
+      ['A', A], ['B', B], ['C', C], ['D', D]
+    ];
+    labeled.forEach(([label, pt], i) => {
+      ctx.beginPath();
+      ctx.arc(pt.x, pt.y, 12, 0, Math.PI * 2);
+      ctx.fillStyle = '#3498DB';
+      ctx.fill();
+      ctx.strokeStyle = '#FFFFFF';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // Keyboard focus highlight ring
+      if (document.activeElement === canvas && i === selectedPointIndex) {
+        ctx.beginPath();
+        ctx.arc(pt.x, pt.y, 20, 0, Math.PI * 2);
+        ctx.strokeStyle = '#3498DB';
+        ctx.lineWidth = 3;
+        ctx.setLineDash([5, 4]);
+        ctx.stroke();
+        ctx.setLineDash([]);
+      }
+
+      if (showLabels) {
+        ctx.fillStyle = '#2C3E50';
+        ctx.font = 'bold 13px DM Sans, sans-serif';
+        ctx.fillText(label, pt.x + 16, pt.y - 6);
+
+        const screenX = Math.round(pt.x);
+        const screenY = Math.round(pt.y);
+        ctx.font = '13px DM Sans, sans-serif';
+        ctx.fillStyle = '#7F8C8D';
+        ctx.fillText(`(${screenX}, ${screenY})`, pt.x + 16, pt.y + 10);
+      }
+    });
+  }
+
+  // --- Hit test ---
+  function hitTest(x: number, y: number): PointKey | null {
+    const keys: PointKey[] = ['A', 'B', 'C', 'D'];
+    for (const key of keys) {
+      const pt = toScreen(points[key].nx, points[key].ny);
+      if (Math.hypot(x - pt.x, y - pt.y) <= 22) {
+        return key;
+      }
+    }
+    return null;
+  }
+
+  function getCanvasPos(e: MouseEvent | Touch) {
+    const rect = canvas.getBoundingClientRect();
+    return {
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    };
+  }
+
+  // --- Mouse events ---
+  canvas.addEventListener('mousedown', (e) => {
+    const { x, y } = getCanvasPos(e);
+    dragTarget = hitTest(x, y);
+    if (dragTarget) canvas.style.cursor = 'grabbing';
+  });
+
+  canvas.addEventListener('mousemove', (e) => {
+    const { x, y } = getCanvasPos(e);
+    if (dragTarget) {
+      const norm = toNorm(
+        Math.max(0, Math.min(canvasWidth, x)),
+        Math.max(0, Math.min(canvasHeight, y))
+      );
+      points[dragTarget] = norm;
+      draw();
+    } else {
+      canvas.style.cursor = hitTest(x, y) ? 'grab' : 'crosshair';
+    }
+  });
+
+  canvas.addEventListener('mouseup', () => {
+    dragTarget = null;
+    canvas.style.cursor = 'crosshair';
+  });
+
+  canvas.addEventListener('mouseleave', () => {
+    dragTarget = null;
+    canvas.style.cursor = 'crosshair';
+  });
+
+  // --- Touch events ---
+  canvas.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    const touch = e.touches[0];
+    const { x, y } = getCanvasPos(touch);
+    dragTarget = hitTest(x, y);
+  }, { passive: false });
+
+  canvas.addEventListener('touchmove', (e) => {
+    e.preventDefault();
+    if (!dragTarget) return;
+    const touch = e.touches[0];
+    const { x, y } = getCanvasPos(touch);
+    const norm = toNorm(
+      Math.max(0, Math.min(canvasWidth, x)),
+      Math.max(0, Math.min(canvasHeight, y))
+    );
+    points[dragTarget] = norm;
+    draw();
+  }, { passive: false });
+
+  canvas.addEventListener('touchend', (e) => {
+    e.preventDefault();
+    dragTarget = null;
+  }, { passive: false });
+
+  // --- Keyboard navigation ---
+  canvas.addEventListener('keydown', (e: KeyboardEvent) => {
+    const step = 0.02;
+    const point = points[pointKeys[selectedPointIndex]];
+    switch (e.key) {
+      case 'Tab':
+        e.preventDefault();
+        selectedPointIndex = e.shiftKey
+          ? (selectedPointIndex - 1 + pointKeys.length) % pointKeys.length
+          : (selectedPointIndex + 1) % pointKeys.length;
+        draw();
+        break;
+      case 'ArrowUp':
+        e.preventDefault();
+        point.ny = Math.max(0.02, point.ny - step);
+        draw();
+        break;
+      case 'ArrowDown':
+        e.preventDefault();
+        point.ny = Math.min(0.98, point.ny + step);
+        draw();
+        break;
+      case 'ArrowLeft':
+        e.preventDefault();
+        point.nx = Math.max(0.02, point.nx - step);
+        draw();
+        break;
+      case 'ArrowRight':
+        e.preventDefault();
+        point.nx = Math.min(0.98, point.nx + step);
+        draw();
+        break;
+    }
+  });
+
+  canvas.addEventListener('focus', () => draw());
+  canvas.addEventListener('blur', () => draw());
+
+  // --- Controls ---
+  resetBtn.addEventListener('click', () => {
+    points.A = { ...DEFAULTS.A };
+    points.B = { ...DEFAULTS.B };
+    points.C = { ...DEFAULTS.C };
+    points.D = { ...DEFAULTS.D };
+    draw();
+  });
+
+  toggleLabelsBtn.addEventListener('click', () => {
+    showLabels = !showLabels;
+    toggleLabelsBtn.textContent = showLabels ? 'Hide Labels' : 'Show Labels';
+    draw();
+  });
+
+  const handleResize = () => draw();
+  window.addEventListener('resize', handleResize);
+  document.addEventListener('astro:before-swap', () => {
+    window.removeEventListener('resize', handleResize);
+  });
+
+  // Initial draw
+  draw();
+</script>

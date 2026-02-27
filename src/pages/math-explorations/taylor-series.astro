@@ -1,0 +1,643 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout
+  title="Taylor Series for e^x — Hayaan Dangra"
+  description="Watch polynomial approximations converge to e^x — add terms and see how quickly the Maclaurin series locks onto the curve."
+>
+  <section class="demo-page section">
+    <div class="container">
+      <h1>Taylor Series for e^x</h1>
+
+      <div class="explanation">
+        <p>I found this in my math homework and had to look it up because it seemed wrong. The claim is that e^x — which is this irrational, transcendental number that goes on forever — can be approximated by a regular polynomial.</p>
+        <p>A polynomial is just: a + bx + cx² + dx³... Normal stuff. But the Maclaurin series says if you pick the coefficients just right (1, 1, 1/2, 1/6, 1/24...), your polynomial tracks e^x almost perfectly near x=0. Add more terms and the range where it works keeps growing.</p>
+        <p>The slider starts at degree 1 (just a straight line). By degree 5, you can barely see the gap near x=0. Watch the error graph at the bottom — the area shrinks as you add terms.</p>
+      </div>
+
+      <div class="demo-container">
+        <h2>Polynomial Approximation</h2>
+        <canvas id="mainCanvas" role="img" aria-label="Graph showing e^x and its Taylor polynomial approximations at different degrees"></canvas>
+
+        <div class="controls">
+          <div class="control-group">
+            <label for="degreeSlider">
+              Polynomial Degree: <span id="degreeLabel">N</span> = <span id="degreeValue">1</span>
+            </label>
+            <input type="range" id="degreeSlider" min="1" max="5" step="1" value="1">
+          </div>
+
+          <div class="button-group">
+            <button id="addTermBtn">Add Next Term</button>
+            <button id="resetBtn">Reset</button>
+            <button id="showAllBtn">Show All Terms</button>
+          </div>
+
+          <div class="stats">
+            <div class="formula" id="formulaDisplay">P<sub>1</sub>(x) = 1 + x</div>
+            <div class="error-readout">
+              <span>Error at x=1: |e<sup>1</sup> - P<sub id="errDegree1">1</sub>(1)| = <span id="errorAt1" class="error-val">0.000000</span></span>
+              <span>Error at x=2: |e<sup>2</sup> - P<sub id="errDegree2">1</sub>(2)| = <span id="errorAt2" class="error-val">0.000000</span></span>
+            </div>
+          </div>
+        </div>
+
+        <h3>Absolute Error |e^x - P<sub id="errorDegreeLabel">1</sub>(x)|</h3>
+        <canvas id="errorCanvas" role="img" aria-label="Graph showing the absolute error between e^x and the current Taylor polynomial approximation"></canvas>
+      </div>
+
+      <div class="why-matters">
+        <h2>Why Calculators Can Actually Compute e^x</h2>
+        <p>Your calculator can't compute e^x directly — transcendental functions don't have exact finite representations. So what does it actually do? It uses a polynomial approximation like this. With enough terms, the error is smaller than the display precision, so it looks exact.</p>
+        <p>The coefficients (1, 1, 1/2, 1/6, 1/24, 1/120...) are 1/n! — they come from the derivatives of e^x, which are all also e^x. That self-referential property is what makes e^x special and why this particular series converges so cleanly.</p>
+        <p>Physics simulations, signal processing, financial models — anything involving exponential growth or decay is computing an approximation like this underneath. The degree slider you're moving literally controls how accurate the computation would be.</p>
+      </div>
+
+      <nav class="demo-nav">
+        <a href="/math-explorations/geometric-series">← Geometric Series</a>
+        <a href="/math-explorations">Back to Math Explorations →</a>
+      </nav>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .demo-page {
+    padding: var(--space-xl) 0 var(--space-3xl);
+  }
+
+  h1 {
+    text-align: center;
+    margin-bottom: var(--space-xl);
+  }
+
+  h2 {
+    margin-top: var(--space-xl);
+    margin-bottom: var(--space-md);
+  }
+
+  h3 {
+    margin-top: var(--space-lg);
+    margin-bottom: var(--space-md);
+    font-size: 1.25rem;
+  }
+
+  .explanation {
+    max-width: 800px;
+    margin: 0 auto var(--space-2xl);
+    background-color: var(--light-gray);
+    padding: var(--space-lg);
+    border-radius: 8px;
+    border-left: 4px solid var(--purple);
+  }
+
+  .explanation p:last-child {
+    margin-bottom: 0;
+  }
+
+  .demo-container {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  canvas {
+    width: 100%;
+    border: 1px solid var(--mid-gray);
+    border-radius: 4px;
+    background-color: var(--white);
+    display: block;
+  }
+
+  #mainCanvas {
+    height: 280px;
+  }
+
+  #errorCanvas {
+    height: 140px;
+  }
+
+  .controls {
+    margin: var(--space-lg) 0;
+    padding: var(--space-md);
+    background-color: var(--light-gray);
+    border-radius: 8px;
+  }
+
+  .control-group {
+    margin-bottom: var(--space-md);
+  }
+
+  label {
+    display: block;
+    margin-bottom: var(--space-xs);
+    font-weight: 500;
+    color: var(--charcoal);
+  }
+
+  #degreeValue {
+    font-weight: 700;
+    color: #E74C3C;
+  }
+
+  input[type="range"] {
+    width: 100%;
+    height: 8px;
+    border-radius: 4px;
+    background: var(--mid-gray);
+    outline: none;
+    -webkit-appearance: none;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--purple);
+    cursor: pointer;
+  }
+
+  input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--purple);
+    cursor: pointer;
+    border: none;
+  }
+
+  .button-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
+  }
+
+  button {
+    width: 100%;
+    min-height: 44px;
+  }
+
+  @media (min-width: 768px) {
+    .button-group {
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+
+    button {
+      width: auto;
+      min-width: 120px;
+    }
+  }
+
+  .stats {
+    background-color: var(--white);
+    border-radius: 4px;
+    padding: var(--space-sm);
+    border: 1px solid var(--mid-gray);
+  }
+
+  .formula {
+    font-family: 'Courier New', monospace;
+    font-size: 1rem;
+    margin-bottom: var(--space-xs);
+    color: var(--charcoal);
+    overflow-wrap: break-word;
+  }
+
+  .error-readout {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 0.875rem;
+    color: var(--charcoal);
+  }
+
+  .error-val {
+    font-family: 'Courier New', monospace;
+    font-weight: 700;
+    color: var(--purple);
+  }
+
+  .why-matters {
+    max-width: 800px;
+    margin: var(--space-2xl) auto;
+    padding: var(--space-lg);
+    background-color: var(--light-gray);
+    border-radius: 8px;
+    border-left: 4px solid var(--orange);
+  }
+
+  .why-matters p:last-child {
+    margin-bottom: 0;
+  }
+
+  .demo-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+    margin-top: var(--space-2xl);
+    padding-top: var(--space-xl);
+    border-top: 1px solid var(--mid-gray);
+    flex-wrap: wrap;
+  }
+
+  .demo-nav a {
+    font-weight: 500;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+
+  @media (min-width: 768px) {
+    #mainCanvas {
+      height: 400px;
+    }
+
+    #errorCanvas {
+      height: 180px;
+    }
+
+    .error-readout {
+      flex-direction: row;
+      gap: var(--space-lg);
+    }
+
+    .formula {
+      font-size: 1.125rem;
+    }
+
+    .demo-nav {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+  }
+</style>
+
+<script>
+  const mainCanvas = document.getElementById('mainCanvas') as HTMLCanvasElement;
+  const errorCanvas = document.getElementById('errorCanvas') as HTMLCanvasElement;
+  const degreeSlider = document.getElementById('degreeSlider') as HTMLInputElement;
+  const degreeValue = document.getElementById('degreeValue') as HTMLSpanElement;
+  const formulaDisplay = document.getElementById('formulaDisplay') as HTMLDivElement;
+  const errorAt1 = document.getElementById('errorAt1') as HTMLSpanElement;
+  const errorAt2 = document.getElementById('errorAt2') as HTMLSpanElement;
+  const errDegree1 = document.getElementById('errDegree1') as HTMLElement;
+  const errDegree2 = document.getElementById('errDegree2') as HTMLElement;
+  const errorDegreeLabel = document.getElementById('errorDegreeLabel') as HTMLElement;
+  const addTermBtn = document.getElementById('addTermBtn') as HTMLButtonElement;
+  const resetBtn = document.getElementById('resetBtn') as HTMLButtonElement;
+  const showAllBtn = document.getElementById('showAllBtn') as HTMLButtonElement;
+
+  // Degree color map
+  const degreeColors: Record<number, string> = {
+    1: '#E74C3C',
+    2: '#E67E22',
+    3: '#27AE60',
+    4: '#3498DB',
+    5: '#9B59B6',
+  };
+
+  // Formula strings (using subscript-compatible HTML)
+  const formulaHTML: Record<number, string> = {
+    1: 'P<sub>1</sub>(x) = 1 + x',
+    2: 'P<sub>2</sub>(x) = 1 + x + x\u00B2/2',
+    3: 'P<sub>3</sub>(x) = 1 + x + x\u00B2/2 + x\u00B3/6',
+    4: 'P<sub>4</sub>(x) = 1 + x + x\u00B2/2 + x\u00B3/6 + x\u2074/24',
+    5: 'P<sub>5</sub>(x) = 1 + x + x\u00B2/2 + x\u00B3/6 + x\u2074/24 + x\u2075/120',
+  };
+
+  function setupCanvas(canvas: HTMLCanvasElement): { ctx: CanvasRenderingContext2D; width: number; height: number } {
+    const dpr = window.devicePixelRatio || 1;
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    const ctx = canvas.getContext('2d')!;
+    ctx.scale(dpr, dpr);
+    return { ctx, width: rect.width, height: rect.height };
+  }
+
+  function factorial(n: number): number {
+    if (n <= 1) return 1;
+    let result = 1;
+    for (let i = 2; i <= n; i++) result *= i;
+    return result;
+  }
+
+  function evalPoly(x: number, degree: number): number {
+    let sum = 0;
+    for (let n = 0; n <= degree; n++) {
+      sum += Math.pow(x, n) / factorial(n);
+    }
+    return sum;
+  }
+
+  // Coordinate transform helpers for main canvas
+  // x-axis: -3 to 3, y-axis: -3 to 20
+  const X_MIN = -3;
+  const X_MAX = 3;
+  const Y_MIN = -3;
+  const Y_MAX = 20;
+
+  function toPixelX(x: number, width: number): number {
+    return ((x - X_MIN) / (X_MAX - X_MIN)) * width;
+  }
+
+  function toPixelY(y: number, height: number): number {
+    return height - ((y - Y_MIN) / (Y_MAX - Y_MIN)) * height;
+  }
+
+  function drawMainCanvas(degree: number) {
+    const { ctx, width, height } = setupCanvas(mainCanvas);
+
+    // Clear
+    ctx.fillStyle = '#FFFFFF';
+    ctx.fillRect(0, 0, width, height);
+
+    // Grid lines (very faint, every 1 unit in x and y)
+    ctx.strokeStyle = 'rgba(0,0,0,0.05)';
+    ctx.lineWidth = 1;
+
+    for (let gx = Math.ceil(X_MIN); gx <= Math.floor(X_MAX); gx++) {
+      const px = toPixelX(gx, width);
+      ctx.beginPath();
+      ctx.moveTo(px, 0);
+      ctx.lineTo(px, height);
+      ctx.stroke();
+    }
+    for (let gy = Math.ceil(Y_MIN); gy <= Math.floor(Y_MAX); gy++) {
+      const py = toPixelY(gy, height);
+      ctx.beginPath();
+      ctx.moveTo(0, py);
+      ctx.lineTo(width, py);
+      ctx.stroke();
+    }
+
+    // Axes
+    ctx.strokeStyle = 'rgba(0,0,0,0.25)';
+    ctx.lineWidth = 1.5;
+
+    // x-axis (y=0)
+    const py0 = toPixelY(0, height);
+    ctx.beginPath();
+    ctx.moveTo(0, py0);
+    ctx.lineTo(width, py0);
+    ctx.stroke();
+
+    // y-axis (x=0)
+    const px0 = toPixelX(0, width);
+    ctx.beginPath();
+    ctx.moveTo(px0, 0);
+    ctx.lineTo(px0, height);
+    ctx.stroke();
+
+    // Axis tick labels
+    ctx.fillStyle = '#888888';
+    ctx.font = '13px DM Sans';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'top';
+    for (let gx = X_MIN; gx <= X_MAX; gx++) {
+      if (gx === 0) continue;
+      const px = toPixelX(gx, width);
+      ctx.fillText(String(gx), px, py0 + 4);
+    }
+
+    ctx.textAlign = 'right';
+    ctx.textBaseline = 'middle';
+    const yTickVals = [Y_MIN, 0, 5, 10, 15, Y_MAX];
+    for (const gy of yTickVals) {
+      const py = toPixelY(gy, height);
+      ctx.fillText(String(gy), px0 - 4, py);
+    }
+
+    const SAMPLES = 500;
+
+    // Draw previous degree approximation curves (faded)
+    for (let d = 1; d < degree; d++) {
+      const color = degreeColors[d];
+      ctx.strokeStyle = color;
+      ctx.globalAlpha = 0.4;
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      let started = false;
+      for (let i = 0; i <= SAMPLES; i++) {
+        const x = X_MIN + (i / SAMPLES) * (X_MAX - X_MIN);
+        const y = evalPoly(x, d);
+        const px = toPixelX(x, width);
+        const py = toPixelY(y, height);
+        if (!started) {
+          ctx.moveTo(px, Math.max(0, Math.min(height, py)));
+          started = true;
+        } else {
+          ctx.lineTo(px, Math.max(0, Math.min(height, py)));
+        }
+      }
+      ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+
+    // Draw current degree approximation (full color, 3px)
+    const currentColor = degreeColors[degree];
+    ctx.strokeStyle = currentColor;
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    let polyStarted = false;
+    for (let i = 0; i <= SAMPLES; i++) {
+      const x = X_MIN + (i / SAMPLES) * (X_MAX - X_MIN);
+      const y = evalPoly(x, degree);
+      const px = toPixelX(x, width);
+      const py = toPixelY(y, height);
+      if (!polyStarted) {
+        ctx.moveTo(px, Math.max(0, Math.min(height, py)));
+        polyStarted = true;
+      } else {
+        ctx.lineTo(px, Math.max(0, Math.min(height, py)));
+      }
+    }
+    ctx.stroke();
+
+    // Draw true e^x — thick black dashed
+    ctx.strokeStyle = '#000000';
+    ctx.lineWidth = 3;
+    ctx.setLineDash([6, 3]);
+    ctx.beginPath();
+    let expStarted = false;
+    for (let i = 0; i <= SAMPLES; i++) {
+      const x = X_MIN + (i / SAMPLES) * (X_MAX - X_MIN);
+      const y = Math.exp(x);
+      const px = toPixelX(x, width);
+      const py = toPixelY(y, height);
+      if (!expStarted) {
+        ctx.moveTo(px, Math.max(0, Math.min(height, py)));
+        expStarted = true;
+      } else {
+        ctx.lineTo(px, Math.max(0, Math.min(height, py)));
+      }
+    }
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Legend: e^x label near top-right
+    ctx.fillStyle = '#000000';
+    ctx.font = '13px DM Sans';
+    ctx.textAlign = 'right';
+    ctx.textBaseline = 'top';
+    ctx.fillText('— e^x (exact)', width - 8, 8);
+  }
+
+  function drawErrorCanvas(degree: number) {
+    const { ctx, width, height } = setupCanvas(errorCanvas);
+
+    ctx.fillStyle = '#FFFFFF';
+    ctx.fillRect(0, 0, width, height);
+
+    const ERR_Y_MAX = 5;
+    const SAMPLES = 500;
+
+    // Grid lines (faint)
+    ctx.strokeStyle = 'rgba(0,0,0,0.05)';
+    ctx.lineWidth = 1;
+    for (let gx = Math.ceil(X_MIN); gx <= Math.floor(X_MAX); gx++) {
+      const px = toPixelX(gx, width);
+      ctx.beginPath();
+      ctx.moveTo(px, 0);
+      ctx.lineTo(px, height);
+      ctx.stroke();
+    }
+
+    // Axes
+    ctx.strokeStyle = 'rgba(0,0,0,0.25)';
+    ctx.lineWidth = 1.5;
+    // x-axis at bottom
+    ctx.beginPath();
+    ctx.moveTo(0, height);
+    ctx.lineTo(width, height);
+    ctx.stroke();
+    // y-axis
+    const epx0 = toPixelX(0, width);
+    ctx.beginPath();
+    ctx.moveTo(epx0, 0);
+    ctx.lineTo(epx0, height);
+    ctx.stroke();
+
+    // Tick labels on x-axis
+    ctx.fillStyle = '#888888';
+    ctx.font = '13px DM Sans';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'bottom';
+    for (let gx = X_MIN; gx <= X_MAX; gx++) {
+      if (gx === 0) continue;
+      const px = toPixelX(gx, width);
+      ctx.fillText(String(gx), px, height - 2);
+    }
+
+    const color = degreeColors[degree];
+
+    // Compute error points
+    const points: { px: number; py: number }[] = [];
+    for (let i = 0; i <= SAMPLES; i++) {
+      const x = X_MIN + (i / SAMPLES) * (X_MAX - X_MIN);
+      const err = Math.abs(Math.exp(x) - evalPoly(x, degree));
+      const clampedErr = Math.min(err, ERR_Y_MAX);
+      const px = toPixelX(x, width);
+      const py = height - (clampedErr / ERR_Y_MAX) * height;
+      points.push({ px, py });
+    }
+
+    // Fill area under error curve
+    ctx.fillStyle = color;
+    ctx.globalAlpha = 0.2;
+    ctx.beginPath();
+    ctx.moveTo(points[0].px, height);
+    for (const pt of points) {
+      ctx.lineTo(pt.px, pt.py);
+    }
+    ctx.lineTo(points[points.length - 1].px, height);
+    ctx.closePath();
+    ctx.fill();
+    ctx.globalAlpha = 1;
+
+    // Draw error curve
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(points[0].px, points[0].py);
+    for (let i = 1; i < points.length; i++) {
+      ctx.lineTo(points[i].px, points[i].py);
+    }
+    ctx.stroke();
+
+    // Label top-left
+    ctx.fillStyle = '#555555';
+    ctx.font = '13px DM Sans';
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'top';
+    ctx.fillText('Absolute Error |e\u02E3 \u2212 P\u2099(x)|', 6, 6);
+  }
+
+  function updateStats(degree: number) {
+    const color = degreeColors[degree];
+
+    // Update degree display color
+    const degreeValueEl = degreeValue as HTMLSpanElement;
+    degreeValueEl.textContent = String(degree);
+    degreeValueEl.style.color = color;
+
+    // Update formula
+    formulaDisplay.innerHTML = formulaHTML[degree];
+
+    // Update error labels
+    errDegree1.textContent = String(degree);
+    errDegree2.textContent = String(degree);
+    errorDegreeLabel.textContent = String(degree);
+
+    // Compute errors
+    const e1 = Math.abs(Math.exp(1) - evalPoly(1, degree));
+    const e2 = Math.abs(Math.exp(2) - evalPoly(2, degree));
+    errorAt1.textContent = e1.toFixed(6);
+    errorAt2.textContent = e2.toFixed(6);
+    errorAt1.style.color = color;
+    errorAt2.style.color = color;
+  }
+
+  function fullRedraw() {
+    const degree = parseInt(degreeSlider.value, 10);
+    drawMainCanvas(degree);
+    drawErrorCanvas(degree);
+    updateStats(degree);
+  }
+
+  degreeSlider.addEventListener('input', fullRedraw);
+
+  addTermBtn.addEventListener('click', () => {
+    const current = parseInt(degreeSlider.value, 10);
+    if (current < 5) {
+      degreeSlider.value = String(current + 1);
+      fullRedraw();
+    }
+  });
+
+  resetBtn.addEventListener('click', () => {
+    degreeSlider.value = '1';
+    fullRedraw();
+  });
+
+  showAllBtn.addEventListener('click', () => {
+    degreeSlider.value = '5';
+    fullRedraw();
+  });
+
+  const handleResize = () => { fullRedraw(); };
+  window.addEventListener('resize', handleResize);
+  document.addEventListener('astro:before-swap', () => {
+    window.removeEventListener('resize', handleResize);
+  });
+
+  // Initial draw
+  fullRedraw();
+</script>

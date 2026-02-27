@@ -4,44 +4,37 @@ import Layout from '../../layouts/Layout.astro';
 
 <Layout
   title="Math Explorations — Hayaan Dangra"
-  description="Interactive visualizations exploring chaos theory, prime patterns, random walks, and wave mathematics."
+  description="Interactive visualizations exploring geometry, infinite series, and function approximation — from a middle school Desmos project to Taylor series."
 >
   <section class="hero section">
     <div class="container">
       <h1>Math Explorations</h1>
-      <p class="hero-text">I keep running into math concepts that make way more sense when you can see them. So I started building these — each one is something I wanted to understand better. Drag the sliders, mess with the parameters, and watch what happens.</p>
+      <p class="hero-text">These are math concepts from class that I wanted to see in action. Drag the sliders, move the points, and watch the math unfold.</p>
     </div>
   </section>
 
   <section class="demos section">
     <div class="container">
       <div class="demo-grid">
-        <a href="/math-explorations/chaos" class="demo-card" data-accent="blue">
+        <a href="/math-explorations/bisector" class="demo-card" data-accent="blue">
           <div class="card-border"></div>
-          <h3>Chaos Theory</h3>
-          <p>One equation, zero randomness, and somehow it produces total chaos</p>
-          <span class="demo-link">Explore Demo →</span>
+          <h3>Perpendicular Bisector</h3>
+          <p>I built this in Desmos in middle school. It does something that still looks like magic to me</p>
+          <span class="demo-link" aria-hidden="true">Explore Demo →</span>
         </a>
 
-        <a href="/math-explorations/primes" class="demo-card" data-accent="orange">
+        <a href="/math-explorations/geometric-series" class="demo-card" data-accent="green">
           <div class="card-border"></div>
-          <h3>Prime Spirals</h3>
-          <p>Primes are supposed to be random. So why do they line up in diagonals?</p>
-          <span class="demo-link">Explore Demo →</span>
+          <h3>Geometric Series</h3>
+          <p>Adding halves forever should take forever. It doesn't. Here's why that's actually provable</p>
+          <span class="demo-link" aria-hidden="true">Explore Demo →</span>
         </a>
 
-        <a href="/math-explorations/walks" class="demo-card" data-accent="green">
+        <a href="/math-explorations/taylor-series" class="demo-card" data-accent="purple">
           <div class="card-border"></div>
-          <h3>Random Walks</h3>
-          <p>Flip a coin 1000 times. The pattern that shows up shouldn't exist, but it does</p>
-          <span class="demo-link">Explore Demo →</span>
-        </a>
-
-        <a href="/math-explorations/fourier" class="demo-card" data-accent="purple">
-          <div class="card-border"></div>
-          <h3>Fourier Series</h3>
-          <p>Any wave — no matter how jagged — is just sine waves stacked up</p>
-          <span class="demo-link">Explore Demo →</span>
+          <h3>Taylor Series</h3>
+          <p>e^x is transcendental. A polynomial shouldn't be able to approximate it. It does anyway</p>
+          <span class="demo-link" aria-hidden="true">Explore Demo →</span>
         </a>
       </div>
     </div>
@@ -50,7 +43,7 @@ import Layout from '../../layouts/Layout.astro';
   <section class="about section">
     <div class="container">
       <h2>Why I Built These</h2>
-      <p>I kept hitting concepts in math that I could solve on paper but didn't really <em>get</em>. Building something where I can see the math moving helped it click in a way textbooks never did. Each demo started with a question I couldn't stop thinking about.</p>
+      <p>I wanted to dive deeper and visualize the concepts we learned in class. Building something where I can see the math moving helped it click in a way textbooks never did. Each demo started with a question I couldn't stop thinking about.</p>
       <p class="honest-note">Honest note: I used AI tools to help with the coding — I'm not a programmer. But the math design — what to visualize, what parameters matter, what's actually interesting to explore — that part is mine. The AI can't do that because it doesn't know what I'm trying to understand.</p>
       <a href="/" class="button">← Back to Home</a>
     </div>
@@ -90,7 +83,13 @@ import Layout from '../../layouts/Layout.astro';
 
   @media (min-width: 768px) {
     .demo-grid {
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .demo-grid {
+      grid-template-columns: repeat(3, 1fr);
     }
   }
 
@@ -130,11 +129,11 @@ import Layout from '../../layouts/Layout.astro';
   }
 
   .demo-card[data-accent="green"] .card-border {
-    background-color: #27AE60;
+    background-color: var(--green);
   }
 
   .demo-card[data-accent="purple"] .card-border {
-    background-color: #9B59B6;
+    background-color: var(--purple);
   }
 
   .demo-card h3 {
@@ -179,7 +178,8 @@ import Layout from '../../layouts/Layout.astro';
 
   .honest-note {
     font-style: italic;
-    color: #555;
+    color: var(--charcoal);
+    opacity: 0.7;
     margin-bottom: var(--space-xl);
   }
 
@@ -191,5 +191,9 @@ import Layout from '../../layouts/Layout.astro';
     .about p {
       font-size: 1.1rem;
     }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .demo-card { transition: none !important; }
   }
 </style>

@@ -1,0 +1,477 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout
+  title="Geometric Series — Hayaan Dangra"
+  description="Watch (1/2)^n converge to 1 — add terms one at a time and see each slice fill in a square until it's almost complete."
+>
+  <section class="demo-page section">
+    <div class="container">
+      <h1>Geometric Series: (½)ⁿ</h1>
+
+      <div class="explanation">
+        <p>This came from a math class argument. Someone said "you can add an infinite number of things together and get a finite answer" and I said that didn't make sense. Like, doesn't adding forever mean the sum keeps growing forever?</p>
+        <p>Turns out no, and this is why: each term is half the previous one. (1/2) + (1/4) + (1/8)... the pieces get small so fast that they never quite fill up the whole square, but they get infinitely close to it.</p>
+        <p>The slider adds one term at a time. Watch the remaining gray gap — it always cuts in half. By term 6 you've got 63/64 of the square filled. You'll never finish, but you can get as close as you want.</p>
+      </div>
+
+      <div class="demo-container">
+        <h2>Fill the Square</h2>
+        <canvas id="seriesCanvas" role="img" aria-label="Interactive geometric series visualization — use the slider to add terms and watch the square fill up"></canvas>
+
+        <div class="sum-display">
+          <div class="sum-row">
+            <span class="sum-label">Sum so far:</span>
+            <span class="sum-value"><span id="sumDecimal">0.0000</span> <span class="sum-fraction" id="sumFraction">(0/1)</span></span>
+          </div>
+          <div class="sum-row">
+            <span class="sum-label">Terms added:</span>
+            <span class="sum-value" id="termsAdded">0 of 6</span>
+          </div>
+          <div class="sum-row">
+            <span class="sum-label">Remaining:</span>
+            <span class="sum-value" id="remaining">1.0000</span>
+          </div>
+        </div>
+
+        <div class="controls">
+          <div class="control-group">
+            <label for="termsSlider">
+              Terms: <span id="termsValue">0</span> of 6
+            </label>
+            <input type="range" id="termsSlider" min="0" max="6" step="1" value="0">
+          </div>
+
+          <div class="button-group">
+            <button id="addNextBtn">Add Next Term</button>
+            <button id="resetBtn">Reset</button>
+            <button id="showAllBtn">Show All</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="why-matters">
+        <h2>The Infinite Sum That Equals 1</h2>
+        <p>The formal answer is a/(1-r) where r is the ratio between terms. Here r = 1/2, so the sum is (1/2)/(1 - 1/2) = 1. That formula comes from the formula for geometric series, and once you understand it visually, it's obvious why it works.</p>
+        <p>This shows up in probability (the chance of eventually winning a game), in computing (binary fractions, like how 0.1111... in binary equals 1), and in calculus as the first example of a convergent infinite series. Every calculus class uses this series to build intuition for convergence before getting into the harder stuff.</p>
+        <p>I keep thinking about what "approaching but never reaching" actually means. The sum never equals 1 at a finite step. But the limit is exactly 1. That's the thing I'm still sitting with.</p>
+      </div>
+
+      <nav class="demo-nav">
+        <a href="/math-explorations/bisector">← Perpendicular Bisector</a>
+        <a href="/math-explorations/taylor-series">Next: Taylor Series →</a>
+      </nav>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .demo-page {
+    padding: var(--space-xl) 0 var(--space-3xl);
+  }
+
+  h1 {
+    text-align: center;
+    margin-bottom: var(--space-xl);
+  }
+
+  h2 {
+    margin-top: var(--space-xl);
+    margin-bottom: var(--space-md);
+  }
+
+  .explanation {
+    max-width: 800px;
+    margin: 0 auto var(--space-2xl);
+    background-color: var(--light-gray);
+    padding: var(--space-lg);
+    border-radius: 8px;
+    border-left: 4px solid var(--green);
+  }
+
+  .demo-container {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  canvas {
+    width: 100%;
+    height: 280px;
+    border: 1px solid var(--mid-gray);
+    border-radius: 4px;
+    background-color: var(--white);
+    display: block;
+  }
+
+  @media (min-width: 768px) {
+    canvas {
+      height: 400px;
+    }
+  }
+
+  .sum-display {
+    margin: var(--space-md) 0;
+    padding: var(--space-md);
+    background-color: var(--light-gray);
+    border-radius: 8px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.875rem;
+  }
+
+  @media (min-width: 768px) {
+    .sum-display {
+      font-size: 1rem;
+    }
+  }
+
+  .sum-row {
+    display: flex;
+    gap: var(--space-md);
+    margin-bottom: var(--space-xs);
+  }
+
+  .sum-row:last-child {
+    margin-bottom: 0;
+  }
+
+  .sum-label {
+    color: var(--charcoal);
+    min-width: 110px;
+    font-weight: 500;
+  }
+
+  @media (min-width: 768px) {
+    .sum-label {
+      min-width: 130px;
+    }
+  }
+
+  .sum-value {
+    color: #1E7A48;
+    font-weight: 700;
+  }
+
+  .sum-fraction {
+    color: var(--charcoal);
+    font-weight: 400;
+    opacity: 0.8;
+  }
+
+  .controls {
+    margin: var(--space-lg) 0;
+    padding: var(--space-md);
+    background-color: var(--light-gray);
+    border-radius: 8px;
+  }
+
+  .control-group {
+    margin-bottom: var(--space-md);
+  }
+
+  label {
+    display: block;
+    margin-bottom: var(--space-xs);
+    font-weight: 500;
+    color: var(--charcoal);
+  }
+
+  #termsValue {
+    color: #1E7A48;
+    font-weight: 700;
+  }
+
+  input[type="range"] {
+    width: 100%;
+    height: 8px;
+    border-radius: 4px;
+    background: var(--mid-gray);
+    outline: none;
+    -webkit-appearance: none;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--green);
+    cursor: pointer;
+  }
+
+  input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--green);
+    cursor: pointer;
+    border: none;
+  }
+
+  .button-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  button {
+    width: 100%;
+    min-height: 44px;
+  }
+
+  @media (min-width: 768px) {
+    .button-group {
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+
+    button {
+      width: auto;
+      min-width: 120px;
+    }
+  }
+
+  #addNextBtn {
+    background-color: var(--green);
+  }
+
+  #addNextBtn:hover {
+    background-color: #1E8449;
+  }
+
+  .why-matters {
+    max-width: 800px;
+    margin: var(--space-2xl) auto;
+    padding: var(--space-lg);
+    background-color: var(--light-gray);
+    border-radius: 8px;
+    border-left: 4px solid var(--orange);
+  }
+
+  .demo-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+    margin-top: var(--space-2xl);
+    padding-top: var(--space-xl);
+    border-top: 1px solid var(--mid-gray);
+    flex-wrap: wrap;
+  }
+
+  @media (min-width: 768px) {
+    .demo-nav {
+      flex-direction: row;
+      align-items: flex-start;
+    }
+  }
+
+  .demo-nav a {
+    font-weight: 500;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+</style>
+
+<script>
+  const canvas = document.getElementById('seriesCanvas') as HTMLCanvasElement;
+  const termsSlider = document.getElementById('termsSlider') as HTMLInputElement;
+  const termsValue = document.getElementById('termsValue') as HTMLSpanElement;
+  const addNextBtn = document.getElementById('addNextBtn') as HTMLButtonElement;
+  const resetBtn = document.getElementById('resetBtn') as HTMLButtonElement;
+  const showAllBtn = document.getElementById('showAllBtn') as HTMLButtonElement;
+  const sumDecimal = document.getElementById('sumDecimal') as HTMLSpanElement;
+  const sumFraction = document.getElementById('sumFraction') as HTMLSpanElement;
+  const termsAdded = document.getElementById('termsAdded') as HTMLSpanElement;
+  const remaining = document.getElementById('remaining') as HTMLSpanElement;
+
+  const COLORS = [
+    '#3498DB', // term 1 — blue
+    '#27AE60', // term 2 — green
+    '#E67E22', // term 3 — orange
+    '#9B59B6', // term 4 — purple
+    '#E74C3C', // term 5 — red
+    '#3498DB', // term 6 — blue again
+  ];
+
+  const LABELS = ['1/2', '1/4', '1/8', '1/16', '1/32', '1/64'];
+  const MAX_TERMS = 6;
+
+  function setupCanvas(c: HTMLCanvasElement) {
+    const dpr = window.devicePixelRatio || 1;
+    const rect = c.getBoundingClientRect();
+    c.width = rect.width * dpr;
+    c.height = rect.height * dpr;
+    const ctx = c.getContext('2d')!;
+    ctx.scale(dpr, dpr);
+    return { ctx, width: rect.width, height: rect.height };
+  }
+
+  interface Rect {
+    x: number;
+    y: number;
+    w: number;
+    h: number;
+    label: string;
+    color: string;
+  }
+
+  function computeRects(sqX: number, sqY: number, sqW: number, sqH: number): Rect[] {
+    const rects: Rect[] = [];
+
+    // Track the remaining unfilled region as we subdivide
+    // Each step alternates: even index (0,2,4) = split left half; odd index (1,3,5) = split top half
+    // Remaining region tracked as (rx, ry, rw, rh)
+    let rx = sqX;
+    let ry = sqY;
+    let rw = sqW;
+    let rh = sqH;
+
+    for (let i = 0; i < MAX_TERMS; i++) {
+      let rectX: number, rectY: number, rectW: number, rectH: number;
+
+      if (i % 2 === 0) {
+        // Split left half of remaining region
+        rectX = rx;
+        rectY = ry;
+        rectW = rw / 2;
+        rectH = rh;
+        // Remaining: right half
+        rx = rx + rw / 2;
+        rw = rw / 2;
+      } else {
+        // Split top half of remaining region
+        rectX = rx;
+        rectY = ry;
+        rectW = rw;
+        rectH = rh / 2;
+        // Remaining: bottom half
+        ry = ry + rh / 2;
+        rh = rh / 2;
+      }
+
+      rects.push({
+        x: rectX,
+        y: rectY,
+        w: rectW,
+        h: rectH,
+        label: LABELS[i],
+        color: COLORS[i],
+      });
+    }
+
+    return rects;
+  }
+
+  function drawSeries(n: number) {
+    const { ctx, width, height } = setupCanvas(canvas);
+
+    // Clear
+    ctx.fillStyle = '#FFFFFF';
+    ctx.fillRect(0, 0, width, height);
+
+    // Square dimensions — leave room for padding
+    const padding = 20;
+    const size = Math.min(width - padding * 2, height - padding * 2, 300);
+    const sqX = Math.floor((width - size) / 2);
+    const sqY = Math.floor((height - size) / 2);
+    const sqW = size;
+    const sqH = size;
+
+    const rects = computeRects(sqX, sqY, sqW, sqH);
+
+    // Draw unfilled remainder (full square first, then overlay filled rects)
+    ctx.fillStyle = '#ECF0F1';
+    ctx.fillRect(sqX, sqY, sqW, sqH);
+
+    // Draw filled rectangles for terms 0..n-1
+    for (let i = 0; i < n; i++) {
+      const r = rects[i];
+      ctx.fillStyle = r.color;
+      ctx.fillRect(r.x, r.y, r.w, r.h);
+
+      // Label — only if min dimension >= 30px
+      const minDim = Math.min(r.w, r.h);
+      if (minDim >= 30) {
+        ctx.fillStyle = '#FFFFFF';
+        ctx.font = `bold ${Math.max(13, Math.min(16, Math.floor(minDim * 0.22)))}px DM Sans, sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(r.label, r.x + r.w / 2, r.y + r.h / 2);
+      }
+    }
+
+    // Square border
+    ctx.strokeStyle = '#2C3E50';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(sqX, sqY, sqW, sqH);
+
+    // Reset text alignment
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'alphabetic';
+  }
+
+  function updateDisplay(n: number) {
+    // S_N = 1 - (1/2)^N
+    // Exact fraction: numerator = 2^N - 1, denominator = 2^N
+    const denom = Math.pow(2, n);
+    const numer = denom - 1;
+    const sumVal = n === 0 ? 0 : numer / denom;
+    const remainVal = 1 - sumVal;
+
+    termsValue.textContent = String(n);
+    sumDecimal.textContent = sumVal.toFixed(4);
+
+    if (n === 0) {
+      sumFraction.textContent = '(0/1)';
+    } else {
+      sumFraction.textContent = `(${numer}/${denom})`;
+    }
+
+    termsAdded.textContent = `${n} of ${MAX_TERMS}`;
+    remaining.textContent = remainVal.toFixed(4);
+  }
+
+  function update() {
+    const n = parseInt(termsSlider.value, 10);
+    drawSeries(n);
+    updateDisplay(n);
+
+    // Disable Add Next if at max
+    addNextBtn.disabled = n >= MAX_TERMS;
+    addNextBtn.style.opacity = n >= MAX_TERMS ? '0.5' : '1';
+  }
+
+  termsSlider.addEventListener('input', update);
+
+  addNextBtn.addEventListener('click', () => {
+    const n = parseInt(termsSlider.value, 10);
+    if (n < MAX_TERMS) {
+      termsSlider.value = String(n + 1);
+      update();
+    }
+  });
+
+  resetBtn.addEventListener('click', () => {
+    termsSlider.value = '0';
+    update();
+  });
+
+  showAllBtn.addEventListener('click', () => {
+    termsSlider.value = String(MAX_TERMS);
+    update();
+  });
+
+  const handleResize = () => { update(); };
+  window.addEventListener('resize', handleResize);
+  document.addEventListener('astro:before-swap', () => {
+    window.removeEventListener('resize', handleResize);
+  });
+
+  // Initial draw
+  update();
+</script>
